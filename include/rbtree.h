@@ -19,21 +19,23 @@ typedef struct RBT_t {
     struct Node *root_node;
 } RBT_t;
 
-RBT_t *RBT_new();
+// Create a new Red Black Tree
+RBT_t *RBT_new_tree();
 
 // Insert a new node
-_Bool RBT_insert(Node_t *pRBT, int key, char *data, size_t size);
+_Bool RBT_insert_node(Node_t *pRBT, int key, char *data, size_t size);
 
 // Search for a specific node
-Node_t RBT_search(Node_t *pRBT, int key);
+Node_t RBT_search_node(Node_t *pRBT, int key);
 
 // Erase a node
-_Bool RBT_erase(Node_t *pRBT, int key);
+_Bool RBT_erase_node(Node_t *pRBT, int key);
 
-// Delete and free memory of the tree
-void RBT_delete(RBT_t *pRBT);
+// Clear the tree
+void RBT_clear_tree(RBT_t *pRBT);
 
-// Empty the tree
-void RBT_clear(RBT_t *pRBT);
+// Clear a node
+void RBT_clear_node(Node_t *pNode);
+
 
 #endif
