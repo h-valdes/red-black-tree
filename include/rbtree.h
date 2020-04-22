@@ -1,15 +1,21 @@
 #ifndef RBTREE_H
 #define RBTREE_H
 
+#include "stdio.h"
+
+enum color_t {BLACK, RED};
+
 typedef struct Node {
-    char color;
+    enum color_t color;
+    int key;
     size_t size;
-    struct node *parent;
-    struct node *left_node;
-    struct node *right_node;
+    struct Node *parent_node;
+    struct Node *left_node;
+    struct Node *right_node;
 } Node;
 
 typedef struct Tree {
+    struct Node *root_node;
 } Tree;
 
 #endif
