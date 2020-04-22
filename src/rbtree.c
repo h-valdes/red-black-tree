@@ -9,3 +9,11 @@ RBT_t *RBT_new(){
     }
     return pRBT;
 }
+
+_Bool RBT_insert(Node_t *pRBT, int key, char *data, size_t size){
+    return 0;
+}
+
+void RBT_delete(RBT_t *pRBT){
+    free(pRBT);
+}

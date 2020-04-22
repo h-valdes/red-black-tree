@@ -21,12 +21,19 @@ typedef struct RBT_t {
 
 RBT_t *RBT_new();
 
+// Insert a new node
 _Bool RBT_insert(Node_t *pRBT, int key, char *data, size_t size);
 
+// Search for a specific node
 Node_t RBT_search(Node_t *pRBT, int key);
 
+// Erase a node
 _Bool RBT_erase(Node_t *pRBT, int key);
 
+// Delete and free memory of the tree
+void RBT_delete(RBT_t *pRBT);
+
+// Empty the tree
 void RBT_clear(RBT_t *pRBT);
 
 #endif
