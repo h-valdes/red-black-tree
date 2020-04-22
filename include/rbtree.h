@@ -5,8 +5,6 @@
 
 enum color_t {BLACK, RED};
 
-typedef const void *GetKeyFunc_t(const void *data);
-
 typedef struct Node {
     int key;
     enum color_t color;
@@ -19,10 +17,9 @@ typedef struct Node {
 
 typedef struct RBT_t {
     struct Node *root_node;
-    GetKeyFunc_t *getKey;
 } RBT_t;
 
-RBT_t *newRBT();
+RBT_t *RBT_new();
 
 _Bool RBT_insert(Node_t *pRBT, int key, char *data, size_t size);
 

@@ -1,7 +1,7 @@
 # Specify the minimum version for CMake
 
 cmake_minimum_required(VERSION 2.8)
-
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -fsanitize=leak -g")
 # Project's name
 
 project(rbtree C)
