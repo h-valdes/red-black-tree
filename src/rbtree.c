@@ -81,6 +81,8 @@ _Bool RBT_insert_node(RBT_t *pRBT, int key) {
         pNewNode = (Node_t *) malloc(sizeof(Node_t));
         pNewNode->key = key;
         pNewNode->color = RED;
+        pNewNode->left_node = NULL;
+        pNewNode->right_node = NULL;
         if(pRBT->root_node == NULL) {
             pRBT->root_node = pNewNode;
         } else {
@@ -90,9 +92,26 @@ _Bool RBT_insert_node(RBT_t *pRBT, int key) {
     return 0;
 }
 
+void RBT_clear(Node_t *pNode) {
+    if (pNode != NULL) {
+        Node_t *leftNode = pNode->left_node;
+        Node_t *rightNode = pNode->right_node;
+        if (leftNode == NULL && rightNode == NULL) {
+            free(pNode);
+        } else {
+            if(leftNode != NULL) {
+                RBT_clear(leftNode);
+            }
+            if(rightNode != NULL) {
+                RBT_clear(rightNode);
+            }
+        }
+    }
+}
+
 void RBT_clear_tree(RBT_t *pRBT) {
     if(pRBT->root_node != NULL) {
-        free(pRBT->root_node);
+        RBT_clear(pRBT->root_node);
     }
     free(pRBT);
 }
