@@ -137,7 +137,7 @@ void RBT_print_node(Node_t *pNode) {
         // Assign the root flag
         char isRoot[6];
         Node_t *pParent = RBT_get_parent(pNode);
-        if(pParent != NULL) {
+        if(pParent == NULL) {
             strcpy(isRoot, trueFlag);
         } else {
             strcpy(isRoot, falseFlag);
