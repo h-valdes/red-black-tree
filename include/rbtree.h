@@ -26,16 +26,16 @@ RBT_t *RBT_new_tree();
 _Bool RBT_insert_node(RBT_t *pRBT, int key, char *data, size_t size);
 
 // Search for a specific node
-Node_t RBT_search_node(RBT_t *pRBT, int key);
+Node_t *RBT_search_node(RBT_t *pRBT, int key);
 
 // Get parent of a node
-Node_t RBT_get_parent(RBT_t *pRBT);
+Node_t *RBT_get_parent(Node_t *pNode);
 
 // Get Grandparent of a node
-Node_t RBT_get_grandparent(RBT_t *pRBT);
+Node_t *RBT_get_grandparent(Node_t *pNode);
 
 // Get uncle of a node
-Node_t RBT_get_uncle(RBT_t *pRBT);
+Node_t *RBT_get_uncle(Node_t *pNode);
 
 // Erase a node
 _Bool RBT_erase_node(Node_t *pRBT, int key);
