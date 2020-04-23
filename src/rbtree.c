@@ -75,10 +75,24 @@ Node_t *RBT_get_uncle(Node_t *pNode) {
     return pUncle;
 }
 
-_Bool RBT_insert_node(RBT_t *pRBT, int key, char *data, size_t size) {
+_Bool RBT_insert_node(RBT_t *pRBT, int key) {
+    if(pRBT != NULL) {
+        Node_t * pNewNode;
+        pNewNode = (Node_t *) malloc(sizeof(Node_t));
+        pNewNode->key = key;
+        pNewNode->color = RED;
+        if(pRBT->root_node == NULL) {
+            pRBT->root_node = pNewNode;
+        } else {
+            printf("There is already a root node!\n");
+        }
+    }
     return 0;
 }
 
 void RBT_clear_tree(RBT_t *pRBT) {
+    if(pRBT->root_node != NULL) {
+        free(pRBT->root_node);
+    }
     free(pRBT);
 }

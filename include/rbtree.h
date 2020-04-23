@@ -8,22 +8,20 @@ enum color_t {BLACK, RED};
 typedef struct Node {
     int key;
     enum color_t color;
-    char *data;
-    size_t size;
     struct Node *parent_node;
     struct Node *left_node;
     struct Node *right_node;
 } Node_t;
 
 typedef struct RBT_t {
-    struct Node_t *root_node;
+    struct Node *root_node;
 } RBT_t;
 
 // Create a new Red Black Tree
 RBT_t *RBT_new_tree();
 
 // Insert a new node
-_Bool RBT_insert_node(RBT_t *pRBT, int key, char *data, size_t size);
+_Bool RBT_insert_node(RBT_t *pRBT, int key);
 
 // Search for a specific node
 Node_t *RBT_search_node(RBT_t *pRBT, int key);
