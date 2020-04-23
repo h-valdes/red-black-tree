@@ -111,26 +111,57 @@ void RBT_right_rotate(Node_t *pNode) {
             pNode->left_node = tempNode;
             tempNode->parent_node = pNode;
             pNode->parent_node = y;
+        } else {
+            printf("RIGHT ROTATE: rotation not possible\n");
         }
     }
 }
 
 _Bool RBT_insert_node(RBT_t *pRBT, int key) {
     if(pRBT != NULL) {
-        Node_t * pNewNode;
-        pNewNode = (Node_t *) malloc(sizeof(Node_t));
-        pNewNode->key = key;
-        pNewNode->color = RED;
-        pNewNode->left_node = NULL;
-        pNewNode->right_node = NULL;
-        pNewNode->parent_node = NULL;
+        Node_t * z;
+        z = (Node_t *) malloc(sizeof(Node_t));
+        z->key = key;
+        z->color = RED;
+        z->left_node = NULL;
+        z->right_node = NULL;
+        z->parent_node = NULL;
+        // In case there are no root, set first node as root
         if(pRBT->root_node == NULL) {
-            pRBT->root_node = pNewNode;
+            pRBT->root_node = z;
         } else {
-            printf("There is already a root node!\n");
+            // Root already exists
+            Node_t *x = pRBT->root_node;
+            Node_t *y = NULL;
+            while( x != NULL) {
+                y = x;
+                if(z->key < x->key) {
+                    x = x->left_node;
+                } else {
+                    x = x->right_node;
+                }
+            }
+            z->parent_node = y;
+            if(y == NULL) {
+                pRBT->root_node = z;
+            } else {
+                if(z->key < y->key) {
+                    y->left_node = z;
+                } else {
+                    y->right_node = z;
+                }
+            }
+            z->left_node = NULL;
+            z->right_node = NULL;
+            z->color = RED;
+            RBT_insert_fixup(pRBT);
         }
     }
     return 0;
+}
+_Bool RBT_insert_fixup(RBT_t *pRBT) {
+    _Bool status = 0;
+    return status;
 }
 
 void RBT_clear(Node_t *pNode) {
