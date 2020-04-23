@@ -23,10 +23,19 @@ typedef struct RBT_t {
 RBT_t *RBT_new_tree();
 
 // Insert a new node
-_Bool RBT_insert_node(Node_t *pRBT, int key, char *data, size_t size);
+_Bool RBT_insert_node(RBT_t *pRBT, int key, char *data, size_t size);
 
 // Search for a specific node
-Node_t RBT_search_node(Node_t *pRBT, int key);
+Node_t RBT_search_node(RBT_t *pRBT, int key);
+
+// Get parent of a node
+Node_t RBT_get_parent(RBT_t *pRBT);
+
+// Get Grandparent of a node
+Node_t RBT_get_grandparent(RBT_t *pRBT);
+
+// Get uncle of a node
+Node_t RBT_get_uncle(RBT_t *pRBT);
 
 // Erase a node
 _Bool RBT_erase_node(Node_t *pRBT, int key);

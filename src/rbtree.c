@@ -10,7 +10,7 @@ RBT_t *RBT_new_tree(){
     return pRBT;
 }
 
-_Bool RBT_insert_node(Node_t *pRBT, int key, char *data, size_t size){
+_Bool RBT_insert_node(RBT_t *pRBT, int key, char *data, size_t size){
     return 0;
 }
 
