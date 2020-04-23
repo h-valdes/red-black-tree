@@ -53,5 +53,8 @@ void RBT_clear_tree(RBT_t *pRBT);
 // Clear a node
 void RBT_clear(Node_t *pNode);
 
+// Print a specific node
+void RBT_print_node(Node_t *pNode);
+
 
 #endif

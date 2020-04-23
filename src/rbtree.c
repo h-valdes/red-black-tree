@@ -1,5 +1,6 @@
 #include "rbtree.h"
 
+#include <string.h>
 #include <stdlib.h>
 
 RBT_t *RBT_new_tree() {
@@ -16,6 +17,7 @@ Node_t *RBT_get_parent(Node_t *pNode) {
     if (pNode != NULL) {
         pParent = pNode->parent_node;
         if (pParent == NULL) {
+            pParent = NULL;
             printf("There is no parent\n");
         }
     } else {
@@ -53,6 +55,8 @@ Node_t *RBT_get_sibling(Node_t *pNode) {
                 pSibling = leftNode;
             } else if(rightNode != NULL && rightNode != pParent) {
                 pSibling = rightNode;
+            } else {
+                pSibling = NULL;
             }
         }
     }
@@ -83,6 +87,7 @@ _Bool RBT_insert_node(RBT_t *pRBT, int key) {
         pNewNode->color = RED;
         pNewNode->left_node = NULL;
         pNewNode->right_node = NULL;
+        pNewNode->parent_node = NULL;
         if(pRBT->root_node == NULL) {
             pRBT->root_node = pNewNode;
         } else {
@@ -114,4 +119,61 @@ void RBT_clear_tree(RBT_t *pRBT) {
         RBT_clear(pRBT->root_node);
     }
     free(pRBT);
+}
+
+void RBT_print_node(Node_t *pNode) {
+    if(pNode != NULL) {
+        char trueFlag[5] = "True";
+        char falseFlag[6] = "False";
+
+        // Assign the color into a string
+        char color[5];
+        if(pNode->color == RED) {
+            strcpy(color, "RED");
+        } else if(pNode->color == BLACK) {
+            strcpy(color, "BLACK");
+        }
+
+        // Assign the root flag
+        char isRoot[6];
+        Node_t *pParent = RBT_get_parent(pNode);
+        if(pParent != NULL) {
+            strcpy(isRoot, trueFlag);
+        } else {
+            strcpy(isRoot, falseFlag);
+        }
+
+        // Assign the sibling flag
+        char hasSibling[6];
+        Node_t *pSibling = RBT_get_sibling(pNode);
+        if(pParent != NULL) {
+            strcpy(hasSibling, trueFlag);
+        } else {
+            strcpy(hasSibling, falseFlag);
+        }
+
+        // Assign left node flag
+        char hasLeftNode[6];
+        if(pNode->left_node != NULL) {
+            strcpy(hasLeftNode, trueFlag);
+        } else {
+            strcpy(hasLeftNode, falseFlag);
+        }
+
+        // Assign right node flag
+        char hasRightNode[6];
+        if(pNode->right_node != NULL) {
+            strcpy(hasRightNode, trueFlag);
+        } else {
+            strcpy(hasRightNode, falseFlag);
+        }
+
+        printf("-- Node information -- \n");
+        printf("key: %d\n", pNode->key);
+        printf("color: %s\n", color);
+        printf("Is a root node?: %s\n", isRoot);
+        printf("Has sibling?: %s\n", hasSibling);
+        printf("Has a left node?: %s\n", hasLeftNode);
+        printf("Has a right node?: %s\n", hasRightNode);
+    }
 }
