@@ -40,21 +40,31 @@ Node_t *RBT_get_grandparent(Node_t *pNode) {
     return pGrandparent;
 }
 
+Node_t *RBT_get_sibling(Node_t *pNode) {
+    Node_t *pSibling;
+    if(pNode != NULL) {
+        Node_t *pParent = RBT_get_parent(pNode);
+        if(pParent != NULL) {
+            Node_t *leftNode;
+            Node_t *rightNode;
+            leftNode = pParent->left_node;
+            rightNode = pParent->right_node;
+            if(leftNode != NULL && leftNode != pParent){
+                pSibling = leftNode;
+            } else if(rightNode != NULL && rightNode != pParent) {
+                pSibling = rightNode;
+            }
+        }
+    }
+    return pSibling;
+}
+
 Node_t *RBT_get_uncle(Node_t *pNode) {
     Node_t *pUncle;
     if (pNode != NULL) {
-        Node_t *pGrandparent = RBT_get_grandparent(pNode);
         Node_t *pParent = RBT_get_parent(pNode);
-        if(pGrandparent != NULL) {
-            Node_t *leftNode;
-            Node_t *rightNode;
-            leftNode = pGrandparent->left_node;
-            rightNode = pGrandparent->right_node;
-            if(leftNode != NULL && leftNode != pParent){
-                pUncle = leftNode;
-            } else if(rightNode != NULL && rightNode != pParent) {
-                pUncle = rightNode;
-            }
+        if(pParent != NULL) {
+            pUncle = RBT_get_sibling(pParent);
             if(pUncle == NULL) {
                 printf("There is no uncle\n");
             }

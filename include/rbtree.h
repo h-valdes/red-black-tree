@@ -34,6 +34,9 @@ Node_t *RBT_get_parent(Node_t *pNode);
 // Get Grandparent of a node
 Node_t *RBT_get_grandparent(Node_t *pNode);
 
+// Get Sibling of a node
+Node_t *RBT_get_sibling(Node_t *pNode);
+
 // Get uncle of a node
 Node_t *RBT_get_uncle(Node_t *pNode);
 
