@@ -79,6 +79,24 @@ Node_t *RBT_get_uncle(Node_t *pNode) {
     return pUncle;
 }
 
+void RBT_left_rotate(Node_t *pNode) {
+    if(pNode != NULL) {
+        // For left rotation check that right child is not NULL
+        Node_t *y = pNode->right_node; 
+        if(y != NULL) {
+            Node_t *tempNode = NULL;
+            if(y->left_node != NULL) {
+                tempNode = y->left_node;
+            }
+            y->parent_node = RBT_get_parent(pNode);
+            pNode->right_node = tempNode;
+            pNode->parent_node = y; 
+        } else {
+            printf("LEFT ROTATE: rotation not possible\n");
+        }
+    }
+}
+
 _Bool RBT_insert_node(RBT_t *pRBT, int key) {
     if(pRBT != NULL) {
         Node_t * pNewNode;
