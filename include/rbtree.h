@@ -37,6 +37,12 @@ Node_t *RBT_get_grandparent(Node_t *pNode);
 // Get uncle of a node
 Node_t *RBT_get_uncle(Node_t *pNode);
 
+// Rotation to the left of a node
+void RBT_left_rotate(Node_t *pNode);
+
+// Rotation to the right of a node
+void RBT_right_rotate(Node_t *pNode);
+
 // Erase a node
 _Bool RBT_erase_node(Node_t *pRBT, int key);
 
