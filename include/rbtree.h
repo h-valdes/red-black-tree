@@ -16,7 +16,7 @@ typedef struct Node {
 } Node_t;
 
 typedef struct RBT_t {
-    struct Node *root_node;
+    struct Node_t *root_node;
 } RBT_t;
 
 // Create a new Red Black Tree

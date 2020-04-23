@@ -1,49 +1,74 @@
 #include "rbtree.h"
+
 #include <stdlib.h>
 
-RBT_t *RBT_new_tree(){
+RBT_t *RBT_new_tree() {
     RBT_t *pRBT = NULL;
     pRBT = malloc(sizeof(RBT_t));
-    if(pRBT != NULL){
+    if (pRBT != NULL) {
         pRBT->root_node = NULL;
     }
     return pRBT;
 }
 
-Node_t *RBT_get_parent(Node_t *pNode){
-    Node_t *parent;
-    if(pNode != NULL) {
-        parent = pNode->parent_node;
-        if(parent == NULL){
+Node_t *RBT_get_parent(Node_t *pNode) {
+    Node_t *pParent;
+    if (pNode != NULL) {
+        pParent = pNode->parent_node;
+        if (pParent == NULL) {
             printf("There is no parent\n");
         }
     } else {
         printf("GET PARENT: Node is NULL\n");
     }
-    return parent;
+    return pParent;
 }
 
-Node_t *RBT_get_grandparent(Node_t *pNode){
-    Node_t *parent;
-    Node_t *grandparent;
-    if(pNode != NULL){
-        parent = RBT_get_parent(pNode);
-        if(parent != NULL) {
-            grandparent = RBT_get_parent(parent);
-            if(grandparent == NULL){
+Node_t *RBT_get_grandparent(Node_t *pNode) {
+    Node_t *pGrandparent;
+    if (pNode != NULL) {
+        Node_t *pParent = RBT_get_parent(pNode);
+        if (pParent != NULL) {
+            pGrandparent = RBT_get_parent(pParent);
+            if (pGrandparent == NULL) {
                 printf("There is no grand parent\n");
             }
         }
     } else {
         printf("GET GRANDPARENT: Node is NULL\n");
     }
-    return grandparent;
+    return pGrandparent;
 }
 
-_Bool RBT_insert_node(RBT_t *pRBT, int key, char *data, size_t size){
+Node_t *RBT_get_uncle(Node_t *pNode) {
+    Node_t *pUncle;
+    if (pNode != NULL) {
+        Node_t *pGrandparent = RBT_get_grandparent(pNode);
+        Node_t *pParent = RBT_get_parent(pNode);
+        if(pGrandparent != NULL) {
+            Node_t *leftNode;
+            Node_t *rightNode;
+            leftNode = pGrandparent->left_node;
+            rightNode = pGrandparent->right_node;
+            if(leftNode != NULL && leftNode != pParent){
+                pUncle = leftNode;
+            } else if(rightNode != NULL && rightNode != pParent) {
+                pUncle = rightNode;
+            }
+            if(pUncle == NULL) {
+                printf("There is no uncle\n");
+            }
+        }
+    } else {
+        printf("GET UNCLE: Node is NULL\n");
+    }
+    return pUncle;
+}
+
+_Bool RBT_insert_node(RBT_t *pRBT, int key, char *data, size_t size) {
     return 0;
 }
 
-void RBT_clear_tree(RBT_t *pRBT){
+void RBT_clear_tree(RBT_t *pRBT) {
     free(pRBT);
 }
