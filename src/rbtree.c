@@ -90,9 +90,27 @@ void RBT_left_rotate(Node_t *pNode) {
             }
             y->parent_node = RBT_get_parent(pNode);
             pNode->right_node = tempNode;
+            tempNode->parent_node = pNode;
             pNode->parent_node = y; 
         } else {
             printf("LEFT ROTATE: rotation not possible\n");
+        }
+    }
+}
+
+void RBT_right_rotate(Node_t *pNode) {
+    if(pNode != NULL) {
+        // For right rotation check that left child
+        Node_t *y = pNode->left_node;
+        if(y != NULL) {
+            Node_t *tempNode = NULL;
+            if(y->right_node != NULL) {
+                tempNode = y->right_node;
+            }
+            y->parent_node = RBT_get_parent(pNode);
+            pNode->left_node = tempNode;
+            tempNode->parent_node = pNode;
+            pNode->parent_node = y;
         }
     }
 }
