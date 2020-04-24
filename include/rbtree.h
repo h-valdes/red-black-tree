@@ -24,7 +24,7 @@ RBT_t *RBT_new_tree();
 _Bool RBT_insert_node(RBT_t *pRBT, int key);
 
 // Inser fixup
-_Bool RBT_insert_fixup(RBT_t *pRBT);
+_Bool RBT_insert_fixup(RBT_t *pRBT, Node_t *pNode);
 
 // Search for a specific node
 Node_t *RBT_search_node(RBT_t *pRBT, int key);
