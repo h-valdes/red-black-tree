@@ -120,6 +120,7 @@ void RBT_right_rotate(Node_t *pNode) {
 _Bool RBT_insert_node(RBT_t *pRBT, int key) {
     if(pRBT != NULL) {
         printf("Start inserting: %d\n", key);
+
         Node_t * z;
         z = (Node_t *) malloc(sizeof(Node_t));
         z->key = key;
@@ -127,38 +128,35 @@ _Bool RBT_insert_node(RBT_t *pRBT, int key) {
         z->left_node = NULL;
         z->right_node = NULL;
         z->parent_node = NULL;
-        // In case there are no root, set first node as root
-        if(pRBT->root_node == NULL) {
-            z->color = BLACK;
+        
+        Node_t *y = NULL;
+        Node_t *x = pRBT->root_node;
+
+        while (x != NULL) {
+            y = x;
+            if (z->key < x->key) {
+                x = x->left_node;
+            } else {
+                x = x->right_node;
+            }
+        }
+
+        z->parent_node = y;
+        if (y == NULL) {
             pRBT->root_node = z;
         } else {
-            // Root already exists
-            printf("Insert not root\n");
-            Node_t *x = pRBT->root_node;
-            Node_t *y = NULL;
-            while( x != NULL) {
-                y = x;
-                if(z->key < x->key) {
-                    x = x->left_node;
-                } else {
-                    x = x->right_node;
-                }
-            }
-            z->parent_node = y;
-            if(y == NULL) {
-                pRBT->root_node = z;
+            if (z->key < y->key) {
+                y->left_node = z;
             } else {
-                if(z->key < y->key) {
-                    y->left_node = z;
-                } else {
-                    y->right_node = z;
-                }
+                y->right_node = z;
             }
-            z->left_node = NULL;
-            z->right_node = NULL;
-            z->color = RED;
-            RBT_insert_fixup(pRBT, z);
         }
+
+        z->left_node = NULL;
+        z->right_node = NULL;
+        z->color = RED;
+        RBT_insert_fixup(pRBT, z);
+
         printf("End insert node with key: %d\n", key);
     }
     return 0;
@@ -169,30 +167,38 @@ _Bool RBT_insert_fixup(RBT_t *pRBT, Node_t *z) {
     if(z != NULL) {
         printf("Start fixup on key: %d\n", z->key);
         Node_t *zParent = RBT_get_parent(z);
-        while(zParent->color == RED) {
-            Node_t *zGrandParent = RBT_get_grandparent(z);
-            if(zParent == zGrandParent->left_node) {
-                Node_t *y = zGrandParent->right_node;
-                if(y->color == RED) {
-                    // Case 1
-                    printf("INSERT FIXUP: Case 1\n");
-                    zParent->color = BLACK;
-                    y->color = BLACK;
-                    zGrandParent->color = RED;
-                    z = zGrandParent;
-                } else if(z == zParent->right_node) {
-                    // Case 2
-                    printf("INSERT FIXUP: Case 2\n");
-                    z = zParent;
-                    RBT_left_rotate(z);
+        if (zParent != NULL) {
+            // There is a parent
+            while (zParent->color == RED) {
+                Node_t *zGrandParent = RBT_get_grandparent(z);
+                if (zGrandParent != NULL) {
+                    if (zParent == zGrandParent->left_node) {
+                        Node_t *y = zGrandParent->right_node;
+                        if (y->color == RED) {
+                            // Case 1
+                            printf("INSERT FIXUP: Case 1\n");
+                            zParent->color = BLACK;
+                            y->color = BLACK;
+                            zGrandParent->color = RED;
+                            z = zGrandParent;
+                        } else if (z == zParent->right_node) {
+                            // Case 2
+                            printf("INSERT FIXUP: Case 2\n");
+                            z = zParent;
+                            RBT_left_rotate(z);
+                        } else {
+                            // Case 3
+                            printf("INSERT FIXUP: Case 3\n");
+                            zParent = RBT_get_parent(z);            // New z's parent
+                            zGrandParent = RBT_get_grandparent(z);  // New z's grandparent
+                            zParent->color = BLACK;
+                            zGrandParent->color = RED;
+                            RBT_right_rotate(zGrandParent);
+                        }
+                    }
                 } else {
-                    // Case 3
-                    printf("INSERT FIXUP: Case 3\n");
-                    zParent = RBT_get_parent(z);// New z's parent
-                    zGrandParent = RBT_get_grandparent(z); // New z's grandparent
-                    zParent->color = BLACK;
-                    zGrandParent->color = RED;
-                    RBT_right_rotate(zGrandParent);
+                    // Grand parent is NULL
+                    break;
                 }
             }
         }
