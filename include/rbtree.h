@@ -30,22 +30,22 @@ _Bool RBT_insert_fixup(RBT_t *pRBT, Node_t *pNode);
 Node_t *RBT_search_node(RBT_t *pRBT, int key);
 
 // Get parent of a node
-Node_t *RBT_get_parent(Node_t *pNode);
+Node_t *RBT_get_parent(RBT_t *pRBT, Node_t *pNode);
 
 // Get Grandparent of a node
-Node_t *RBT_get_grandparent(Node_t *pNode);
+Node_t *RBT_get_grandparent(RBT_t *pRBT, Node_t *pNode);
 
 // Get Sibling of a node
-Node_t *RBT_get_sibling(Node_t *pNode);
+Node_t *RBT_get_sibling(RBT_t *pRBT, Node_t *pNode);
 
 // Get uncle of a node
-Node_t *RBT_get_uncle(Node_t *pNode);
+Node_t *RBT_get_uncle(RBT_t *pRBT, Node_t *pNode);
 
 // Rotation to the left of a node
-void RBT_left_rotate(Node_t *pNode);
+void RBT_left_rotate(RBT_t *pRBT, Node_t *x);
 
 // Rotation to the right of a node
-void RBT_right_rotate(Node_t *pNode);
+void RBT_right_rotate(RBT_t *pRBT, Node_t *x);
 
 // Erase a node
 _Bool RBT_erase_node(Node_t *pRBT, int key);
@@ -57,7 +57,7 @@ void RBT_clear_tree(RBT_t *pRBT);
 void RBT_clear(Node_t *pNode);
 
 // Print a specific node
-void RBT_print_node(Node_t *pNode);
+void RBT_print_node(RBT_t *pRBT, Node_t *pNode);
 
 
 #endif
