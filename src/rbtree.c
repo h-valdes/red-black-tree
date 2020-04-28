@@ -267,7 +267,7 @@ void RBT_print_node(Node_t *pNode) {
 
         printf("\n-- Node information -- \n");
         printf("key: %d\n", pNode->key);
-        printf("color: %s\n", color);
+        printf("color: %s\n", color); //
         printf("Is a root node?: %s\n", isRoot);
         printf("Has sibling?: %s\n", hasSibling);
         printf("Has a left node?: %s\n", hasLeftNode);
