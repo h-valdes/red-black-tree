@@ -18,7 +18,6 @@ Node_t *RBT_get_parent(Node_t *pNode) {
         pParent = pNode->parent_node;
         if (pParent == NULL) {
             pParent = NULL;
-            printf("There is no parent\n");
         }
     } else {
         printf("GET PARENT: Node is NULL\n");
@@ -32,9 +31,6 @@ Node_t *RBT_get_grandparent(Node_t *pNode) {
         Node_t *pParent = RBT_get_parent(pNode);
         if (pParent != NULL) {
             pGrandparent = RBT_get_parent(pParent);
-            if (pGrandparent == NULL) {
-                printf("There is no grand parent\n");
-            }
         }
     } else {
         printf("GET GRANDPARENT: Node is NULL\n");
@@ -69,9 +65,6 @@ Node_t *RBT_get_uncle(Node_t *pNode) {
         Node_t *pParent = RBT_get_parent(pNode);
         if(pParent != NULL) {
             pUncle = RBT_get_sibling(pParent);
-            if(pUncle == NULL) {
-                printf("There is no uncle\n");
-            }
         }
     } else {
         printf("GET UNCLE: Node is NULL\n");
@@ -119,8 +112,6 @@ void RBT_right_rotate(Node_t *pNode) {
 
 _Bool RBT_insert_node(RBT_t *pRBT, int key) {
     if(pRBT != NULL) {
-        printf("Start inserting: %d\n", key);
-
         Node_t * z;
         z = (Node_t *) malloc(sizeof(Node_t));
         z->key = key;
@@ -151,13 +142,8 @@ _Bool RBT_insert_node(RBT_t *pRBT, int key) {
                 y->right_node = z;
             }
         }
-
-        z->left_node = NULL;
-        z->right_node = NULL;
-        z->color = RED;
         RBT_insert_fixup(pRBT, z);
-
-        printf("End insert node with key: %d\n", key);
+        RBT_print_node(z);
     }
     return 0;
 }
@@ -165,11 +151,10 @@ _Bool RBT_insert_node(RBT_t *pRBT, int key) {
 _Bool RBT_insert_fixup(RBT_t *pRBT, Node_t *z) {
     _Bool status = 0;
     if(z != NULL) {
-        printf("Start fixup on key: %d\n", z->key);
         Node_t *zParent = RBT_get_parent(z);
         if (zParent != NULL) {
             // There is a parent
-            while (zParent->color == RED) {
+            while (zParent->color == RED) {                
                 Node_t *zGrandParent = RBT_get_grandparent(z);
                 if (zGrandParent != NULL) {
                     if (zParent == zGrandParent->left_node) {
@@ -186,21 +171,24 @@ _Bool RBT_insert_fixup(RBT_t *pRBT, Node_t *z) {
                             printf("INSERT FIXUP: Case 2\n");
                             z = zParent;
                             RBT_left_rotate(z);
-                        } else {
-                            // Case 3
-                            printf("INSERT FIXUP: Case 3\n");
-                            zParent = RBT_get_parent(z);            // New z's parent
-                            zGrandParent = RBT_get_grandparent(z);  // New z's grandparent
-                            zParent->color = BLACK;
-                            zGrandParent->color = RED;
-                            RBT_right_rotate(zGrandParent);
                         }
+                    } else {
+                        // Case 3
+                        printf("INSERT FIXUP: Case 3\n");
+                        zParent = RBT_get_parent(z);            // New z's parent
+                        zGrandParent = RBT_get_grandparent(z);  // New z's grandparent
+                        zParent->color = BLACK;
+                        zGrandParent->color = RED;
+                        RBT_right_rotate(zGrandParent);
                     }
                 } else {
                     // Grand parent is NULL
+                    printf("Fixup: Grand Parent is null\n");
                     break;
                 }
             }
+        } else {
+            z->color = BLACK;
         }
     }
     return status;
@@ -236,7 +224,7 @@ void RBT_print_node(Node_t *pNode) {
         char falseFlag[6] = "False";
 
         // Assign the color into a string
-        char color[5];
+        char color[6];
         if(pNode->color == RED) {
             strcpy(color, "RED");
         } else if(pNode->color == BLACK) {
@@ -277,7 +265,7 @@ void RBT_print_node(Node_t *pNode) {
             strcpy(hasRightNode, falseFlag);
         }
 
-        printf("-- Node information -- \n");
+        printf("\n-- Node information -- \n");
         printf("key: %d\n", pNode->key);
         printf("color: %s\n", color);
         printf("Is a root node?: %s\n", isRoot);
