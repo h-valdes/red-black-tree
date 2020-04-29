@@ -51,8 +51,13 @@ void right_rotate(RBT_t *pRBT, Node_t *x);
 // Transplant operation for the node
 void transplant(RBT_t *pRBT, Node_t *u, Node_t *v);
 
+// Tree-Minimum
+Node_t *tree_minimum(RBT_t *pRBT, Node_t *x);
+
 // Delete a node
 void RBT_delete(RBT_t *pRBT, Node_t *z);
+
+void delete_fixup(RBT_t *pRBT, Node_t *x);
 
 // Erase a node
 _Bool RBT_erase(Node_t *pRBT, int key);

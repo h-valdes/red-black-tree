@@ -216,6 +216,13 @@ _Bool insert_fixup(RBT_t *pRBT, Node_t *z) {
     return status;
 }
 
+Node_t *tree_minimum(RBT_t *pRBT, Node_t *x) {
+    while(x->left != pRBT->nil){
+		x = x->left;
+	}
+	return x;
+}
+
 void RBT_delete(RBT_t *pRBT, Node_t *z) {
     Node_t *y = z;
     color_t yOriginalColor = y->color;
@@ -227,8 +234,77 @@ void RBT_delete(RBT_t *pRBT, Node_t *z) {
         x = z->left;
         transplant(pRBT, z, z->left);
     } else {
+        y = tree_minimum(pRBT, z->right);
+        yOriginalColor = y->color;
+        x = y->right;
+        if(y->parent == z) {
+            x->parent = y;
+        } else {
+            transplant(pRBT, y, y->right);
+            y->right = z->right;
+            y->right->parent = y;
+        }
+        transplant(pRBT, z, y);
+        y->left = z->left;
+        y->left->parent = y;
+        y->color = z->color;
+    }
+    if(yOriginalColor == BLACK) {
+        delete_fixup(pRBT, x);
+    }
+}
 
-
+void delete_fixup(RBT_t *pRBT, Node_t *x) {
+    while(x != pRBT->root && x->color == BLACK) {
+        if(x == x->parent->left) {
+            Node_t *w = x->parent->right;
+            if(w->color == RED) {
+                w->color = BLACK;
+                x->parent->color = RED;
+                left_rotate(pRBT, x->parent);
+                w = x->parent->right;
+            }
+            if(w->left->color == BLACK && w->right->color == BLACK) {
+                w->color = RED;
+                x = x->parent;
+            } else {
+                if(w->right->color == BLACK) {
+                    w->left->color = BLACK;
+                    w->color = RED;
+                    right_rotate(pRBT, w);
+                    w = x->parent->right;
+                }
+                w->color = x->parent->color;
+                x->parent->color = BLACK;
+                w->right->color = BLACK;
+                left_rotate(pRBT, x->parent);
+                x = pRBT->root;
+            }
+        } else {
+            Node_t *w = x->parent->left;
+            if(w->color == RED) {
+                w->color = BLACK;
+                x->parent->color = RED;
+                right_rotate(pRBT, x->parent);
+                w = x->parent->left;
+            }
+            if(w->right->color == BLACK && w->left->color == BLACK) {
+                w->color = RED;
+                x = x->parent;
+            } else {
+                if(w->left->color == BLACK) {
+                    w->right->color = BLACK;
+                    w->color = RED;
+                    left_rotate(pRBT, w);
+                    w = x->parent->left;
+                }
+                w->color = x->parent->color;
+                x->parent->color = BLACK;
+                w->left->color = BLACK;
+                right_rotate(pRBT, x->parent);
+                x = pRBT->root;
+            }
+        }
     }
 }
 
