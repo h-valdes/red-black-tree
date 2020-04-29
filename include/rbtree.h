@@ -8,13 +8,14 @@ enum color_t {BLACK, RED};
 typedef struct Node {
     int key;
     enum color_t color;
-    struct Node *parent_node;
-    struct Node *left_node;
-    struct Node *right_node;
+    struct Node *parent;
+    struct Node *left;
+    struct Node *right;
 } Node_t;
 
 typedef struct RBT_t {
-    struct Node *root_node;
+    struct Node *root;
+    struct Node *nil;
 } RBT_t;
 
 // Create a new Red Black Tree
