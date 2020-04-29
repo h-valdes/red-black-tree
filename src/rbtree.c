@@ -3,15 +3,16 @@
 #include <string.h>
 #include <stdlib.h>
 
-RBT_t *RBT_new_tree() {
+RBT_t *RBT_new() {
     RBT_t *pRBT = NULL;
     pRBT = malloc(sizeof(RBT_t));
     pRBT->nil = (Node_t *) malloc(sizeof(Node_t));
+    pRBT->nil->color = BLACK;
     pRBT->root = pRBT->nil;
     return pRBT;
 }
 
-Node_t *RBT_get_parent(RBT_t *pRBT, Node_t *pNode) {
+Node_t *get_parent(RBT_t *pRBT, Node_t *pNode) {
     Node_t *pParent;
     if (pNode != NULL) {
         pParent = pNode->parent;
@@ -24,12 +25,12 @@ Node_t *RBT_get_parent(RBT_t *pRBT, Node_t *pNode) {
     return pParent;
 }
 
-Node_t *RBT_get_grandparent(RBT_t *pRBT, Node_t *pNode) {
+Node_t *get_grandparent(RBT_t *pRBT, Node_t *pNode) {
     Node_t *pGrandparent;
     if (pNode != NULL) {
-        Node_t *pParent = RBT_get_parent(pRBT, pNode);
+        Node_t *pParent = get_parent(pRBT, pNode);
         if (pParent != NULL) {
-            pGrandparent = RBT_get_parent(pRBT, pParent);
+            pGrandparent = get_parent(pRBT, pParent);
         }
     } else {
         printf("GET GRANDPARENT: Node is NULL\n");
@@ -37,10 +38,10 @@ Node_t *RBT_get_grandparent(RBT_t *pRBT, Node_t *pNode) {
     return pGrandparent;
 }
 
-Node_t *RBT_get_sibling(RBT_t *pRBT, Node_t *pNode) {
+Node_t *get_sibling(RBT_t *pRBT, Node_t *pNode) {
     Node_t *pSibling;
     if(pNode != NULL) {
-        Node_t *pParent = RBT_get_parent(pRBT, pNode);
+        Node_t *pParent = get_parent(pRBT, pNode);
         if(pParent != NULL) {
             Node_t *leftNode;
             Node_t *rightNode;
@@ -58,12 +59,12 @@ Node_t *RBT_get_sibling(RBT_t *pRBT, Node_t *pNode) {
     return pSibling;
 }
 
-Node_t *RBT_get_uncle(RBT_t *pRBT, Node_t *pNode) {
+Node_t *get_uncle(RBT_t *pRBT, Node_t *pNode) {
     Node_t *pUncle;
     if (pNode != NULL) {
-        Node_t *pParent = RBT_get_parent(pRBT, pNode);
+        Node_t *pParent = get_parent(pRBT, pNode);
         if(pParent != NULL) {
-            pUncle = RBT_get_sibling(pRBT, pParent);
+            pUncle = get_sibling(pRBT, pParent);
         }
     } else {
         printf("GET UNCLE: Node is NULL\n");
@@ -71,7 +72,7 @@ Node_t *RBT_get_uncle(RBT_t *pRBT, Node_t *pNode) {
     return pUncle;
 }
 
-void RBT_left_rotate(RBT_t *pRBT, Node_t *x) {
+void left_rotate(RBT_t *pRBT, Node_t *x) {
     printf("Left rotate\n");
     // For left rotation check that right child is not NULL
     Node_t *y = x->right;
@@ -91,7 +92,7 @@ void RBT_left_rotate(RBT_t *pRBT, Node_t *x) {
     x->parent = y;
 }
 
-void RBT_right_rotate(RBT_t *pRBT, Node_t *x) {
+void right_rotate(RBT_t *pRBT, Node_t *x) {
     // For left rotation check that right child is not NULL
     printf("Right rotate\n");
     Node_t *y = x->left;
@@ -111,7 +112,7 @@ void RBT_right_rotate(RBT_t *pRBT, Node_t *x) {
     x->parent = y;
 }
 
-_Bool RBT_insert_node(RBT_t *pRBT, int key) {
+_Bool RBT_insert(RBT_t *pRBT, int key) {
     if(pRBT != NULL) {
         Node_t * z;
         z = (Node_t *) malloc(sizeof(Node_t));
@@ -145,13 +146,13 @@ _Bool RBT_insert_node(RBT_t *pRBT, int key) {
                 y->right = z;
             }
         }
-        RBT_insert_fixup(pRBT, z);
+        insert_fixup(pRBT, z);
         RBT_print_node(pRBT, z);
     }
     return 0;
 }
 
-_Bool RBT_insert_fixup(RBT_t *pRBT, Node_t *z) {
+_Bool insert_fixup(RBT_t *pRBT, Node_t *z) {
     _Bool status = 0;
     while (z->parent->color == RED) {
         if (z->parent == z->parent->parent->left) {
@@ -168,13 +169,13 @@ _Bool RBT_insert_fixup(RBT_t *pRBT, Node_t *z) {
                     // Case 2
                     printf("INSERT FIXUP: Case 2\n");
                     z = z->parent;
-                    RBT_left_rotate(pRBT, z);
+                    left_rotate(pRBT, z);
                 }
                 // Case 3
                 printf("INSERT FIXUP: Case 3\n");
                 z->parent->color = BLACK;
                 z->parent->parent->color = RED;
-                RBT_right_rotate(pRBT, z->parent->parent);
+                right_rotate(pRBT, z->parent->parent);
             } 
         } else {
             Node_t *y = z->parent->parent->left;
@@ -190,16 +191,17 @@ _Bool RBT_insert_fixup(RBT_t *pRBT, Node_t *z) {
                     // Case 2
                     printf("INSERT FIXUP: Case 2\n");
                     z = z->parent;
-                    RBT_right_rotate(pRBT, z);
+                    right_rotate(pRBT, z);
                 }
                 // Case 3
                 printf("INSERT FIXUP: Case 3\n");
                 z->parent->color = BLACK;
                 z->parent->parent->color = RED;
-                RBT_left_rotate(pRBT, z->parent->parent);
+                left_rotate(pRBT, z->parent->parent);
             }
         } 
     }
+    pRBT->root->color = BLACK;
     return status;
 }
 
@@ -243,7 +245,7 @@ void RBT_print_node(RBT_t *pRBT, Node_t *pNode) {
 
         // Assign the root flag
         char isRoot[6];
-        Node_t *pParent = RBT_get_parent(pRBT, pNode);
+        Node_t *pParent = get_parent(pRBT, pNode);
         if(pParent == NULL) {
             strcpy(isRoot, trueFlag);
         } else {
@@ -252,7 +254,7 @@ void RBT_print_node(RBT_t *pRBT, Node_t *pNode) {
 
         // Assign the sibling flag
         char hasSibling[6];
-        Node_t *pSibling = RBT_get_sibling(pRBT, pNode);
+        Node_t *pSibling = get_sibling(pRBT, pNode);
         if(pParent != NULL) {
             strcpy(hasSibling, trueFlag);
         } else {

@@ -3,7 +3,7 @@
 
 #include "stdio.h"
 
-enum color_t {BLACK, RED};
+enum color_t {RED, BLACK};
 
 typedef struct Node {
     int key;
@@ -19,43 +19,43 @@ typedef struct RBT_t {
 } RBT_t;
 
 // Create a new Red Black Tree
-RBT_t *RBT_new_tree();
+RBT_t *RBT_new();
 
 // Insert a new node
-_Bool RBT_insert_node(RBT_t *pRBT, int key);
+_Bool RBT_insert(RBT_t *pRBT, int key);
 
 // Inser fixup
-_Bool RBT_insert_fixup(RBT_t *pRBT, Node_t *pNode);
+_Bool insert_fixup(RBT_t *pRBT, Node_t *pNode);
 
 // Search for a specific node
-Node_t *RBT_search_node(RBT_t *pRBT, int key);
+Node_t *RBT_search(RBT_t *pRBT, int key);
 
 // Get parent of a node
-Node_t *RBT_get_parent(RBT_t *pRBT, Node_t *pNode);
+Node_t *get_parent(RBT_t *pRBT, Node_t *pNode);
 
 // Get Grandparent of a node
-Node_t *RBT_get_grandparent(RBT_t *pRBT, Node_t *pNode);
+Node_t *get_grandparent(RBT_t *pRBT, Node_t *pNode);
 
 // Get Sibling of a node
-Node_t *RBT_get_sibling(RBT_t *pRBT, Node_t *pNode);
+Node_t *get_sibling(RBT_t *pRBT, Node_t *pNode);
 
 // Get uncle of a node
-Node_t *RBT_get_uncle(RBT_t *pRBT, Node_t *pNode);
+Node_t *get_uncle(RBT_t *pRBT, Node_t *pNode);
 
 // Rotation to the left of a node
-void RBT_left_rotate(RBT_t *pRBT, Node_t *x);
+void left_rotate(RBT_t *pRBT, Node_t *x);
 
 // Rotation to the right of a node
-void RBT_right_rotate(RBT_t *pRBT, Node_t *x);
+void right_rotate(RBT_t *pRBT, Node_t *x);
 
 // Erase a node
-_Bool RBT_erase_node(Node_t *pRBT, int key);
+_Bool RBT_erase(Node_t *pRBT, int key);
 
 // Clear the tree
 void RBT_clear_tree(RBT_t *pRBT);
 
 // Clear a node
-void RBT_clear(Node_t *pNode);
+void clear(Node_t *pNode);
 
 // Print a specific node
 void RBT_print_node(RBT_t *pRBT, Node_t *pNode);
