@@ -112,6 +112,17 @@ void right_rotate(RBT_t *pRBT, Node_t *x) {
     x->parent = y;
 }
 
+void transplant(RBT_t *pRBT, Node_t *u, Node_t *v) {
+    if(u->parent == pRBT->nil) {
+        pRBT->root = v;
+    } else if(u == u->parent->left) {
+        u->parent->left = v;
+    } else {
+        u->parent->right = v;
+        v->parent = u->parent;
+    }
+}
+
 _Bool RBT_insert(RBT_t *pRBT, int key) {
     if(pRBT != NULL) {
         Node_t * z;

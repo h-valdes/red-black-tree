@@ -48,6 +48,8 @@ void left_rotate(RBT_t *pRBT, Node_t *x);
 // Rotation to the right of a node
 void right_rotate(RBT_t *pRBT, Node_t *x);
 
+void transplant(RBT_t *pRBT, Node_t *u, Node_t *v);
+
 // Erase a node
 _Bool RBT_erase(Node_t *pRBT, int key);
 
