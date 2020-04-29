@@ -3,11 +3,11 @@
 
 #include "stdio.h"
 
-enum color_t {RED, BLACK};
+typedef enum color_t {RED, BLACK} color_t;
 
 typedef struct Node {
     int key;
-    enum color_t color;
+    color_t color;
     struct Node *parent;
     struct Node *left;
     struct Node *right;
@@ -48,7 +48,11 @@ void left_rotate(RBT_t *pRBT, Node_t *x);
 // Rotation to the right of a node
 void right_rotate(RBT_t *pRBT, Node_t *x);
 
+// Transplant operation for the node
 void transplant(RBT_t *pRBT, Node_t *u, Node_t *v);
+
+// Delete a node
+void RBT_delete(RBT_t *pRBT, Node_t *z);
 
 // Erase a node
 _Bool RBT_erase(Node_t *pRBT, int key);

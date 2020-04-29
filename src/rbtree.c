@@ -216,6 +216,22 @@ _Bool insert_fixup(RBT_t *pRBT, Node_t *z) {
     return status;
 }
 
+void RBT_delete(RBT_t *pRBT, Node_t *z) {
+    Node_t *y = z;
+    color_t yOriginalColor = y->color;
+    Node_t *x;
+    if(z->left == pRBT->nil) {
+        x = z->right;
+        transplant(pRBT, z, z->right);
+    } else if(z->right == pRBT->nil) {
+        x = z->left;
+        transplant(pRBT, z, z->left);
+    } else {
+
+
+    }
+}
+
 void RBT_clear(Node_t *pNode) {
     if (pNode != NULL) {
         Node_t *leftNode = pNode->left;
