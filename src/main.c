@@ -9,7 +9,6 @@ int main(int argc, char *argv[]){
     RBT_insert(new_tree, 5);
     RBT_insert(new_tree, 1);
     RBT_insert(new_tree, 2);
-    // RBT_print_node(new_tree->root_node);
     RBT_clear_tree(new_tree);
     return 0;
 }

@@ -12,66 +12,6 @@ RBT_t *RBT_new() {
     return pRBT;
 }
 
-Node_t *get_parent(RBT_t *pRBT, Node_t *pNode) {
-    Node_t *pParent;
-    if (pNode != NULL) {
-        pParent = pNode->parent;
-        if (pParent == NULL) {
-            pParent = NULL;
-        }
-    } else {
-        printf("GET PARENT: Node is NULL\n");
-    }
-    return pParent;
-}
-
-Node_t *get_grandparent(RBT_t *pRBT, Node_t *pNode) {
-    Node_t *pGrandparent;
-    if (pNode != NULL) {
-        Node_t *pParent = get_parent(pRBT, pNode);
-        if (pParent != NULL) {
-            pGrandparent = get_parent(pRBT, pParent);
-        }
-    } else {
-        printf("GET GRANDPARENT: Node is NULL\n");
-    }
-    return pGrandparent;
-}
-
-Node_t *get_sibling(RBT_t *pRBT, Node_t *pNode) {
-    Node_t *pSibling;
-    if(pNode != NULL) {
-        Node_t *pParent = get_parent(pRBT, pNode);
-        if(pParent != NULL) {
-            Node_t *leftNode;
-            Node_t *rightNode;
-            leftNode = pParent->left;
-            rightNode = pParent->right;
-            if(leftNode != NULL && leftNode != pParent){
-                pSibling = leftNode;
-            } else if(rightNode != NULL && rightNode != pParent) {
-                pSibling = rightNode;
-            } else {
-                pSibling = NULL;
-            }
-        }
-    }
-    return pSibling;
-}
-
-Node_t *get_uncle(RBT_t *pRBT, Node_t *pNode) {
-    Node_t *pUncle;
-    if (pNode != NULL) {
-        Node_t *pParent = get_parent(pRBT, pNode);
-        if(pParent != NULL) {
-            pUncle = get_sibling(pRBT, pParent);
-        }
-    } else {
-        printf("GET UNCLE: Node is NULL\n");
-    }
-    return pUncle;
-}
-
 void left_rotate(RBT_t *pRBT, Node_t *x) {
     printf("Left rotate\n");
     // For left rotation check that right child is not NULL
@@ -158,7 +98,6 @@ _Bool RBT_insert(RBT_t *pRBT, int key) {
             }
         }
         insert_fixup(pRBT, z);
-        RBT_print_node(pRBT, z);
     }
     return 0;
 }
@@ -331,61 +270,4 @@ void RBT_clear_tree(RBT_t *pRBT) {
     }
     free(pRBT->nil);
     free(pRBT);
-}
-
-void RBT_print_node(RBT_t *pRBT, Node_t *pNode) {
-    if(pNode != NULL) {
-        char trueFlag[5] = "True";
-        char falseFlag[6] = "False";
-
-        // Assign the color into a string
-        char color[6];
-        if(pNode->color == RED) {
-            strcpy(color, "RED");
-        } else if(pNode->color == BLACK) {
-            strcpy(color, "BLACK");
-        }
-
-        // Assign the root flag
-        char isRoot[6];
-        Node_t *pParent = get_parent(pRBT, pNode);
-        if(pParent == NULL) {
-            strcpy(isRoot, trueFlag);
-        } else {
-            strcpy(isRoot, falseFlag);
-        }
-
-        // Assign the sibling flag
-        char hasSibling[6];
-        Node_t *pSibling = get_sibling(pRBT, pNode);
-        if(pParent != NULL) {
-            strcpy(hasSibling, trueFlag);
-        } else {
-            strcpy(hasSibling, falseFlag);
-        }
-
-        // Assign left node flag
-        char hasLeftNode[6];
-        if(pNode->left != NULL) {
-            strcpy(hasLeftNode, trueFlag);
-        } else {
-            strcpy(hasLeftNode, falseFlag);
-        }
-
-        // Assign right node flag
-        char hasRightNode[6];
-        if(pNode->right != NULL) {
-            strcpy(hasRightNode, trueFlag);
-        } else {
-            strcpy(hasRightNode, falseFlag);
-        }
-
-        printf("\n-- Node information -- \n");
-        printf("key: %d\n", pNode->key);
-        printf("color: %s\n", color); //
-        printf("Is a root node?: %s\n", isRoot);
-        printf("Has sibling?: %s\n", hasSibling);
-        printf("Has a left node?: %s\n", hasLeftNode);
-        printf("Has a right node?: %s\n", hasRightNode);
-    }
 }
