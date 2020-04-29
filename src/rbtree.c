@@ -155,11 +155,30 @@ _Bool insert_fixup(RBT_t *pRBT, Node_t *z) {
     return status;
 }
 
+Node_t *RBT_search(RBT_t *pRBT, int k) {
+    Node_t *x = pRBT->root;
+    while(x != pRBT->nil && k != x->key) {
+        if(k < x->key) {
+            x = x->left;
+        } else {
+            x = x->right;
+        }
+    }
+    return x;
+}
+
 Node_t *tree_minimum(RBT_t *pRBT, Node_t *x) {
     while(x->left != pRBT->nil){
 		x = x->left;
 	}
 	return x;
+}
+
+Node_t *tree_maximum(RBT_t *pRBT, Node_t *x) {
+    while(x->right != pRBT->nil) {
+        x = x->right;
+    }
+    return x;
 }
 
 void RBT_delete(RBT_t *pRBT, Node_t *z) {

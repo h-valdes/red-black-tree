@@ -54,9 +54,13 @@ void transplant(RBT_t *pRBT, Node_t *u, Node_t *v);
 // Tree-Minimum
 Node_t *tree_minimum(RBT_t *pRBT, Node_t *x);
 
+// Tree-Maximum
+Node_t *tree_maximum(RBT_t *pRBT, Node_t *x);
+
 // Delete a node
 void RBT_delete(RBT_t *pRBT, Node_t *z);
 
+// Fixup for the delete
 void delete_fixup(RBT_t *pRBT, Node_t *x);
 
 // Erase a node
