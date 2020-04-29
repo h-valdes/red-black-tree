@@ -2,6 +2,7 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <string.h>
 
 RBT_t *RBT_new() {
     RBT_t *pRBT = NULL;
@@ -33,8 +34,6 @@ void left_rotate(RBT_t *pRBT, Node_t *x) {
 }
 
 void right_rotate(RBT_t *pRBT, Node_t *x) {
-    // For left rotation check that right child is not NULL
-    printf("Right rotate\n");
     Node_t *y = x->left;
     x->left = y->right;
     if (y->right != pRBT->nil) {
@@ -264,6 +263,17 @@ void delete_fixup(RBT_t *pRBT, Node_t *x) {
             }
         }
     }
+}
+
+void RBT_export_dot(RBT_t *pRBT) {
+    FILE *pFile = fopen("rbtree.dot", "w+");
+    // Start of the file
+    fprintf(pFile, "digraph RBTree {\n");
+    if(pRBT->root != pRBT->nil) {
+        fprintf(pFile, "\t%d -> 1;\n", pRBT->root->key);
+    }
+    fprintf(pFile, "}\n");
+    fclose(pFile);
 }
 
 void RBT_clear(Node_t *pNode) {
