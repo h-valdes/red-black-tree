@@ -12,6 +12,12 @@ int main(int argc, char *argv[]){
     RBT_insert(newTree, 10);
     RBT_insert(newTree, 8);
     RBT_insert(newTree, 7);
+    
+    Node_t *x = RBT_search(newTree, 3); // Search a node
+    if(x != newTree->nil) {
+        printf("Node %d was found!\n", x->key);
+        RBT_delete(newTree, x); // Delete node from tree
+    }
 
     RBT_export_dot(newTree);
     

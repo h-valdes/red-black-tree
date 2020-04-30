@@ -83,6 +83,8 @@ void add_children(RBT_t *pRBT, Node_t *pNode, FILE *pFile, int *count);
 
 void add_node_color(Node_t *pNode, FILE *pFile);
 
+Node_t *RBT_search(RBT_t *pRBT, int k);
+
 // Generate DOT file for Graphviz
 void RBT_export_dot(RBT_t *pRBT);
 
