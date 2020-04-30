@@ -265,12 +265,44 @@ void delete_fixup(RBT_t *pRBT, Node_t *x) {
     }
 }
 
+void add_nil(Node_t *pNode, FILE *pFile, int *count) {
+    fprintf(pFile, "\tnil%d [shape=point];\n", *count);
+    fprintf(pFile, "\t%d -> nil%d;\n", pNode->key, *count);
+    *count = *count + 1;
+}
+
+void add_children(RBT_t *pRBT, Node_t *pNode, FILE *pFile, int *count) {
+    add_node_color(pNode, pFile);
+    if(pNode->left != pRBT->nil) {
+        fprintf(pFile, "\t%d -> %d;\n", pNode->key, pNode->left->key);
+        add_children(pRBT, pNode->left, pFile, count);
+    } else {
+        add_nil(pNode, pFile, count);
+    }
+    if (pNode->right != pRBT->nil) {
+        fprintf(pFile, "\t%d -> %d;\n", pNode->key, pNode->right->key);
+        add_children(pRBT, pNode->right, pFile, count);
+    } else {
+        add_nil(pNode, pFile, count);
+    }
+}
+
+void add_node_color(Node_t *pNode, FILE *pFile) {
+    if(pNode->color == BLACK) {
+        fprintf(pFile, "\t%d [fontcolor=white, fillcolor=black, style=filled];\n", pNode->key);
+    } else {
+        fprintf(pFile, "\t%d [fontcolor=white, fillcolor=red, style=filled];\n", pNode->key);
+    }
+}
+
 void RBT_export_dot(RBT_t *pRBT) {
     FILE *pFile = fopen("rbtree.dot", "w+");
     // Start of the file
     fprintf(pFile, "digraph RBTree {\n");
+    fprintf(pFile, "\tnode [fontname=\"Arial\"];\n");
     if(pRBT->root != pRBT->nil) {
-        fprintf(pFile, "\t%d -> 1;\n", pRBT->root->key);
+        int count = 0;
+        add_children(pRBT, pRBT->root, pFile, &count);
     }
     fprintf(pFile, "}\n");
     fclose(pFile);

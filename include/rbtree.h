@@ -76,6 +76,12 @@ void clear(Node_t *pNode);
 // Print a specific node
 void RBT_print_node(RBT_t *pRBT, Node_t *pNode);
 
+void add_nil(Node_t *pNode, FILE *pFile, int *count);
+
+void add_children(RBT_t *pRBT, Node_t *pNode, FILE *pFile, int *count);
+
+void add_node_color(Node_t *pNode, FILE *pFile);
+
 // Generate DOT file for Graphviz
 void RBT_export_dot(RBT_t *pRBT);
 
