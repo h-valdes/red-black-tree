@@ -1,13 +1,12 @@
 #include "rbtree.h"
 
-#include <string.h>
 #include <stdlib.h>
 #include <string.h>
 
 RBT_t *RBT_new() {
     RBT_t *pRBT = NULL;
     pRBT = malloc(sizeof(RBT_t));
-    pRBT->nil = (Node_t *) malloc(sizeof(Node_t));
+    pRBT->nil = (Node_t *)malloc(sizeof(Node_t));
     pRBT->nil->color = BLACK;
     pRBT->root = pRBT->nil;
     return pRBT;
@@ -52,9 +51,9 @@ void right_rotate(RBT_t *pRBT, Node_t *x) {
 }
 
 void transplant(RBT_t *pRBT, Node_t *u, Node_t *v) {
-    if(u->parent == pRBT->nil) {
+    if (u->parent == pRBT->nil) {
         pRBT->root = v;
-    } else if(u == u->parent->left) {
+    } else if (u == u->parent->left) {
         u->parent->left = v;
     } else {
         u->parent->right = v;
@@ -63,15 +62,15 @@ void transplant(RBT_t *pRBT, Node_t *u, Node_t *v) {
 }
 
 _Bool RBT_insert(RBT_t *pRBT, int key) {
-    if(pRBT != NULL) {
-        Node_t * z;
-        z = (Node_t *) malloc(sizeof(Node_t));
+    if (pRBT != NULL) {
+        Node_t *z;
+        z = (Node_t *)malloc(sizeof(Node_t));
         z->key = key;
         z->color = RED;
         z->left = pRBT->nil;
         z->right = pRBT->nil;
         z->parent = pRBT->nil;
-        
+
         Node_t *y = pRBT->nil;
         Node_t *x = pRBT->root;
 
@@ -125,7 +124,7 @@ _Bool insert_fixup(RBT_t *pRBT, Node_t *z) {
                 z->parent->color = BLACK;
                 z->parent->parent->color = RED;
                 right_rotate(pRBT, z->parent->parent);
-            } 
+            }
         } else {
             Node_t *y = z->parent->parent->left;
             if (y->color == RED) {
@@ -148,7 +147,7 @@ _Bool insert_fixup(RBT_t *pRBT, Node_t *z) {
                 z->parent->parent->color = RED;
                 left_rotate(pRBT, z->parent->parent);
             }
-        } 
+        }
     }
     pRBT->root->color = BLACK;
     return status;
@@ -156,8 +155,8 @@ _Bool insert_fixup(RBT_t *pRBT, Node_t *z) {
 
 Node_t *RBT_search(RBT_t *pRBT, int k) {
     Node_t *x = pRBT->root;
-    while(x != pRBT->nil && k != x->key) {
-        if(k < x->key) {
+    while (x != pRBT->nil && k != x->key) {
+        if (k < x->key) {
             x = x->left;
         } else {
             x = x->right;
@@ -167,14 +166,14 @@ Node_t *RBT_search(RBT_t *pRBT, int k) {
 }
 
 Node_t *tree_minimum(RBT_t *pRBT, Node_t *x) {
-    while(x->left != pRBT->nil){
-		x = x->left;
-	}
-	return x;
+    while (x->left != pRBT->nil) {
+        x = x->left;
+    }
+    return x;
 }
 
 Node_t *tree_maximum(RBT_t *pRBT, Node_t *x) {
-    while(x->right != pRBT->nil) {
+    while (x->right != pRBT->nil) {
         x = x->right;
     }
     return x;
@@ -184,17 +183,17 @@ void RBT_delete(RBT_t *pRBT, Node_t *z) {
     Node_t *y = z;
     color_t yOriginalColor = y->color;
     Node_t *x;
-    if(z->left == pRBT->nil) {
+    if (z->left == pRBT->nil) {
         x = z->right;
         transplant(pRBT, z, z->right);
-    } else if(z->right == pRBT->nil) {
+    } else if (z->right == pRBT->nil) {
         x = z->left;
         transplant(pRBT, z, z->left);
     } else {
         y = tree_minimum(pRBT, z->right);
         yOriginalColor = y->color;
         x = y->right;
-        if(y->parent == z) {
+        if (y->parent == z) {
             x->parent = y;
         } else {
             transplant(pRBT, y, y->right);
@@ -206,26 +205,27 @@ void RBT_delete(RBT_t *pRBT, Node_t *z) {
         y->left->parent = y;
         y->color = z->color;
     }
-    if(yOriginalColor == BLACK) {
+    if (yOriginalColor == BLACK) {
         delete_fixup(pRBT, x);
     }
+    free(z);
 }
 
 void delete_fixup(RBT_t *pRBT, Node_t *x) {
-    while(x != pRBT->root && x->color == BLACK) {
-        if(x == x->parent->left) {
+    while (x != pRBT->root && x->color == BLACK) {
+        if (x == x->parent->left) {
             Node_t *w = x->parent->right;
-            if(w->color == RED) {
+            if (w->color == RED) {
                 w->color = BLACK;
                 x->parent->color = RED;
                 left_rotate(pRBT, x->parent);
                 w = x->parent->right;
             }
-            if(w->left->color == BLACK && w->right->color == BLACK) {
+            if (w->left->color == BLACK && w->right->color == BLACK) {
                 w->color = RED;
                 x = x->parent;
             } else {
-                if(w->right->color == BLACK) {
+                if (w->right->color == BLACK) {
                     w->left->color = BLACK;
                     w->color = RED;
                     right_rotate(pRBT, w);
@@ -239,17 +239,17 @@ void delete_fixup(RBT_t *pRBT, Node_t *x) {
             }
         } else {
             Node_t *w = x->parent->left;
-            if(w->color == RED) {
+            if (w->color == RED) {
                 w->color = BLACK;
                 x->parent->color = RED;
                 right_rotate(pRBT, x->parent);
                 w = x->parent->left;
             }
-            if(w->right->color == BLACK && w->left->color == BLACK) {
+            if (w->right->color == BLACK && w->left->color == BLACK) {
                 w->color = RED;
                 x = x->parent;
             } else {
-                if(w->left->color == BLACK) {
+                if (w->left->color == BLACK) {
                     w->right->color = BLACK;
                     w->color = RED;
                     left_rotate(pRBT, w);
@@ -273,7 +273,7 @@ void add_nil(Node_t *pNode, FILE *pFile, int *count) {
 
 void add_children(RBT_t *pRBT, Node_t *pNode, FILE *pFile, int *count) {
     add_node_color(pNode, pFile);
-    if(pNode->left != pRBT->nil) {
+    if (pNode->left != pRBT->nil) {
         fprintf(pFile, "\t%d -> %d;\n", pNode->key, pNode->left->key);
         add_children(pRBT, pNode->left, pFile, count);
     } else {
@@ -288,7 +288,7 @@ void add_children(RBT_t *pRBT, Node_t *pNode, FILE *pFile, int *count) {
 }
 
 void add_node_color(Node_t *pNode, FILE *pFile) {
-    if(pNode->color == BLACK) {
+    if (pNode->color == BLACK) {
         fprintf(pFile, "\t%d [fontcolor=white, fillcolor=black, style=filled];\n", pNode->key);
     } else {
         fprintf(pFile, "\t%d [fontcolor=white, fillcolor=red, style=filled];\n", pNode->key);
@@ -300,7 +300,7 @@ void RBT_export_dot(RBT_t *pRBT) {
     // Start of the file
     fprintf(pFile, "digraph RBTree {\n");
     fprintf(pFile, "\tnode [fontname=\"Arial\"];\n");
-    if(pRBT->root != pRBT->nil) {
+    if (pRBT->root != pRBT->nil) {
         int count = 0;
         add_children(pRBT, pRBT->root, pFile, &count);
     }
@@ -308,26 +308,22 @@ void RBT_export_dot(RBT_t *pRBT) {
     fclose(pFile);
 }
 
-void RBT_clear(Node_t *pNode) {
-    if (pNode != NULL) {
-        Node_t *leftNode = pNode->left;
-        Node_t *rightNode = pNode->right;
-        if (leftNode == NULL && rightNode == NULL) {
-            free(pNode);
-        } else {
-            if(leftNode != NULL) {
-                RBT_clear(leftNode);
-            }
-            if(rightNode != NULL) {
-                RBT_clear(rightNode);
-            }
+void RBT_clear(RBT_t *pRBT, Node_t *pNode) {
+    if (pNode->left == pRBT->nil && pNode->right == pRBT->nil) {
+        free(pNode);
+    } else {
+        if (pNode->left != pRBT->nil) {
+            RBT_clear(pRBT, pNode->left);
+        }
+        if (pNode->right != pRBT->nil) {
+            RBT_clear(pRBT, pNode->right);
         }
     }
 }
 
 void RBT_clear_tree(RBT_t *pRBT) {
-    if(pRBT->root != NULL) {
-        RBT_clear(pRBT->root);
+    if (pRBT->root != pRBT->nil) {
+        RBT_clear(pRBT, pRBT->root);
     }
     free(pRBT->nil);
     free(pRBT);

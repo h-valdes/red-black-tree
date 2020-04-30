@@ -9,6 +9,9 @@ int main(int argc, char *argv[]){
     RBT_insert(newTree, 5);
     RBT_insert(newTree, 1);
     RBT_insert(newTree, 2);
+    RBT_insert(newTree, 10);
+    RBT_insert(newTree, 8);
+    RBT_insert(newTree, 7);
 
     RBT_export_dot(newTree);
     

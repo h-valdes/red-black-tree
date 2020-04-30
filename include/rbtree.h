@@ -4,7 +4,8 @@
 #include "stdio.h"
 #include "stdlib.h"
 
-typedef enum color_t {RED, BLACK} color_t;
+typedef enum color_t { RED,
+                       BLACK } color_t;
 
 typedef struct Node {
     int key;
@@ -71,7 +72,7 @@ _Bool RBT_erase(Node_t *pRBT, int key);
 void RBT_clear_tree(RBT_t *pRBT);
 
 // Clear a node
-void clear(Node_t *pNode);
+void clear(RBT_t *pRBT, Node_t *pNode);
 
 // Print a specific node
 void RBT_print_node(RBT_t *pRBT, Node_t *pNode);
