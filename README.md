@@ -19,6 +19,12 @@ make
 ./rbtree
 ```
 
+## Export DOT file into a PNG Image (You need to install Grahpviz)
+
+```
+dot rbtree.dot -Tpng -o rbtree.png
+```
+
 ## API
 
 New tree
