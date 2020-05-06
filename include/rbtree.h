@@ -4,12 +4,21 @@
 #include "stdio.h"
 #include "stdlib.h"
 
-typedef enum color_t { RED,
-                       BLACK } color_t;
+typedef enum color_t { 
+    RED,
+    BLACK 
+} color_t;
+
+typedef enum type_t {
+    INT,
+    DOUBLE,
+    LONG,
+} type_t;
 
 typedef struct Node {
     int key;
     color_t color;
+    void *data;
     struct Node *parent;
     struct Node *left;
     struct Node *right;
@@ -18,13 +27,14 @@ typedef struct Node {
 typedef struct RBT_t {
     struct Node *root;
     struct Node *nil;
+    type_t type;
 } RBT_t;
 
 // Create a new Red Black Tree
-RBT_t *RBT_new();
+RBT_t *RBT_new(type_t type);
 
 // Insert a new node
-_Bool RBT_insert(RBT_t *pRBT, int key);
+_Bool RBT_insert(RBT_t *pRBT, int key, void *data);
 
 // Inser fixup
 _Bool insert_fixup(RBT_t *pRBT, Node_t *pNode);

@@ -3,24 +3,21 @@
 #include <stdlib.h>
 
 int main(int argc, char *argv[]){
-    RBT_t *newTree = RBT_new();
-    RBT_insert(newTree, 3);
-    RBT_insert(newTree, 4);
-    RBT_insert(newTree, 5);
-    RBT_insert(newTree, 1);
-    RBT_insert(newTree, 2);
-    RBT_insert(newTree, 10);
-    RBT_insert(newTree, 8);
-    RBT_insert(newTree, 7);
+    RBT_t *intTree = RBT_new(INT);
+    int new_value = 10;
+    RBT_insert(intTree, 3, &new_value);
+    int value2 = 5;
+    RBT_insert(intTree, 4, &value2);
     
-    Node_t *x = RBT_search(newTree, 3); // Search a node
-    if(x != newTree->nil) {
+    Node_t *x = RBT_search(intTree, 3); // Search a node
+    printf("Data in x is: %d\n", * (int *) x->data);
+    if(x != intTree->nil) {
         printf("Node %d was found!\n", x->key);
-        RBT_delete(newTree, x); // Delete node from tree
+        RBT_delete(intTree, x); // Delete node from tree
     }
 
-    RBT_export_dot(newTree);
+    RBT_export_dot(intTree);
     
-    RBT_clear_tree(newTree);
+    RBT_clear_tree(intTree);
     return 0;
 }

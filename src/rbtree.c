@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-RBT_t *RBT_new() {
+RBT_t *RBT_new(type_t type) {
     RBT_t *pRBT = NULL;
     pRBT = malloc(sizeof(RBT_t));
     pRBT->nil = (Node_t *)malloc(sizeof(Node_t));
@@ -61,11 +61,23 @@ void transplant(RBT_t *pRBT, Node_t *u, Node_t *v) {
     }
 }
 
-_Bool RBT_insert(RBT_t *pRBT, int key) {
+_Bool RBT_insert(RBT_t *pRBT, int key, void *data) {
     if (pRBT != NULL) {
         Node_t *z;
         z = (Node_t *)malloc(sizeof(Node_t));
+
+        // Asssign memory to the data
+        switch(pRBT->type) {
+            case(INT):
+                z->data = (int *)malloc(sizeof(int));
+            case(DOUBLE):
+                z->data = (double *)malloc(sizeof(double));
+            case(LONG):
+                z->data = (long *)malloc(sizeof(long));
+        }
+
         z->key = key;
+        z->data = data;
         z->color = RED;
         z->left = pRBT->nil;
         z->right = pRBT->nil;
@@ -310,6 +322,7 @@ void RBT_export_dot(RBT_t *pRBT) {
 
 void RBT_clear(RBT_t *pRBT, Node_t *pNode) {
     if (pNode->left == pRBT->nil && pNode->right == pRBT->nil) {
+        // free(pNode->data);
         free(pNode);
     } else {
         if (pNode->left != pRBT->nil) {
