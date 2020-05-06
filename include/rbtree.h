@@ -12,7 +12,8 @@ typedef enum color_t {
 typedef enum type_t {
     INT,
     DOUBLE,
-    LONG,
+    LONG_DOUBLE,
+    STRING,
 } type_t;
 
 typedef struct Node {
@@ -35,6 +36,8 @@ RBT_t *RBT_new(type_t type);
 
 // Insert a new node
 _Bool RBT_insert(RBT_t *pRBT, int key, void *data);
+
+void RBT_print_data(RBT_t *pRBT, Node_t *pNode);
 
 // Inser fixup
 _Bool insert_fixup(RBT_t *pRBT, Node_t *pNode);

@@ -9,6 +9,7 @@ RBT_t *RBT_new(type_t type) {
     pRBT->nil = (Node_t *)malloc(sizeof(Node_t));
     pRBT->nil->color = BLACK;
     pRBT->root = pRBT->nil;
+    pRBT->type = type;
     return pRBT;
 }
 
@@ -68,16 +69,18 @@ _Bool RBT_insert(RBT_t *pRBT, int key, void *data) {
 
         // Asssign memory to the data
         switch(pRBT->type) {
-            case(INT):
-                z->data = (int *)malloc(sizeof(int));
-            case(DOUBLE):
-                z->data = (double *)malloc(sizeof(double));
-            case(LONG):
-                z->data = (long *)malloc(sizeof(long));
+            case(INT):;
+                z->data = (int*) data;
+                break;
+            case(DOUBLE):;
+                z->data = (double*) data;
+                break;
+            case(LONG_DOUBLE):;
+                z->data = (long double*) data;
+                break;
         }
 
         z->key = key;
-        z->data = data;
         z->color = RED;
         z->left = pRBT->nil;
         z->right = pRBT->nil;
@@ -163,6 +166,15 @@ _Bool insert_fixup(RBT_t *pRBT, Node_t *z) {
     }
     pRBT->root->color = BLACK;
     return status;
+}
+
+void RBT_print_data(RBT_t *pRBT, Node_t *pNode) {
+    switch (pRBT->type) {
+        case (INT):;
+            int data = *(int *)pNode->data;
+            printf("Data in node %d = %d\n", pNode->key, data);
+            break;
+    }
 }
 
 Node_t *RBT_search(RBT_t *pRBT, int k) {
@@ -322,7 +334,6 @@ void RBT_export_dot(RBT_t *pRBT) {
 
 void RBT_clear(RBT_t *pRBT, Node_t *pNode) {
     if (pNode->left == pRBT->nil && pNode->right == pRBT->nil) {
-        // free(pNode->data);
         free(pNode);
     } else {
         if (pNode->left != pRBT->nil) {
