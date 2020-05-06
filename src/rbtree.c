@@ -9,7 +9,7 @@ RBT_t *RBT_new(type_t type) {
     pRBT->nil = (Node_t *)malloc(sizeof(Node_t));
     pRBT->nil->color = BLACK;
     pRBT->root = pRBT->nil;
-    pRBT->type = type;
+    pRBT->type = type; 
     return pRBT;
 }
 
