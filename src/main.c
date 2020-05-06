@@ -2,8 +2,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void print_int_data(void *data){
+    printf("Printing %d\n", *(int *)data);
+}
+
 int main(int argc, char *argv[]){
-    RBT_t *intTree = RBT_new(INT);
+    RBT_t *intTree = RBT_new(&print_int_data);
     RBT_insert(intTree, 3, &(int){10});
     RBT_insert(intTree, 4, &(int){15});
 

@@ -3,13 +3,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-RBT_t *RBT_new(type_t type) {
+RBT_t *RBT_new(PrintDataFunc_t *printFunc) {
     RBT_t *pRBT = NULL;
     pRBT = malloc(sizeof(RBT_t));
     pRBT->nil = (Node_t *)malloc(sizeof(Node_t));
     pRBT->nil->color = BLACK;
     pRBT->root = pRBT->nil;
-    pRBT->type = type; 
+    pRBT->print_data = printFunc;
     return pRBT;
 }
 
@@ -67,20 +67,8 @@ _Bool RBT_insert(RBT_t *pRBT, int key, void *data) {
         Node_t *z;
         z = (Node_t *)malloc(sizeof(Node_t));
 
-        // Asssign memory to the data
-        switch(pRBT->type) {
-            case(INT):;
-                z->data = (int*) data;
-                break;
-            case(DOUBLE):;
-                z->data = (double*) data;
-                break;
-            case(LONG_DOUBLE):;
-                z->data = (long double*) data;
-                break;
-        }
-
         z->key = key;
+        z->data = data;
         z->color = RED;
         z->left = pRBT->nil;
         z->right = pRBT->nil;
@@ -169,12 +157,7 @@ _Bool insert_fixup(RBT_t *pRBT, Node_t *z) {
 }
 
 void RBT_print_data(RBT_t *pRBT, Node_t *pNode) {
-    switch (pRBT->type) {
-        case (INT):;
-            int data = *(int *)pNode->data;
-            printf("Data in node %d = %d\n", pNode->key, data);
-            break;
-    }
+    pRBT->print_data(pNode->data);
 }
 
 Node_t *RBT_search(RBT_t *pRBT, int k) {

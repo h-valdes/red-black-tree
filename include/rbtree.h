@@ -4,17 +4,12 @@
 #include "stdio.h"
 #include "stdlib.h"
 
-typedef enum color_t { 
+typedef enum color_t {
     RED,
-    BLACK 
+    BLACK
 } color_t;
 
-typedef enum type_t {
-    INT,
-    DOUBLE,
-    LONG_DOUBLE,
-    STRING,
-} type_t;
+typedef void PrintDataFunc_t(void *data);
 
 typedef struct Node {
     int key;
@@ -28,11 +23,11 @@ typedef struct Node {
 typedef struct RBT_t {
     struct Node *root;
     struct Node *nil;
-    type_t type;
+    PrintDataFunc_t *print_data;
 } RBT_t;
 
 // Create a new Red Black Tree
-RBT_t *RBT_new(type_t type);
+RBT_t *RBT_new(PrintDataFunc_t *printFunc);
 
 // Insert a new node
 _Bool RBT_insert(RBT_t *pRBT, int key, void *data);
@@ -44,18 +39,6 @@ _Bool insert_fixup(RBT_t *pRBT, Node_t *pNode);
 
 // Search for a specific node
 Node_t *RBT_search(RBT_t *pRBT, int key);
-
-// Get parent of a node
-Node_t *get_parent(RBT_t *pRBT, Node_t *pNode);
-
-// Get Grandparent of a node
-Node_t *get_grandparent(RBT_t *pRBT, Node_t *pNode);
-
-// Get Sibling of a node
-Node_t *get_sibling(RBT_t *pRBT, Node_t *pNode);
-
-// Get uncle of a node
-Node_t *get_uncle(RBT_t *pRBT, Node_t *pNode);
 
 // Rotation to the left of a node
 void left_rotate(RBT_t *pRBT, Node_t *x);
