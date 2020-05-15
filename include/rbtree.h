@@ -22,7 +22,7 @@ typedef struct Node {
 
 typedef struct RBT_t {
     struct Node *root;
-    struct Node *nil;
+    struct Node *null;
     PrintDataFunc_t *print_data;
 } RBT_t;
 
@@ -135,21 +135,21 @@ Function: clear
 void clear(RBT_t *pRBT, Node_t *pNode);
 
 /*
-Function: add_nil
-@brief Helper function for RBT_export_dot. Adds the nil nodes lines into the the DOT File.
+Function: add_null
+@brief Helper function for RBT_export_dot. Adds the null nodes lines into the the DOT File.
 @param *pNode: pointer of the node
 @param *pFile: pointer of the file stream
-@param *count: counter identifier of how many nil nodes already exists
+@param *count: counter identifier of how many null nodes already exists
 */
-void add_nil(Node_t *pNode, FILE *pFile, int *count);
+void add_null(Node_t *pNode, FILE *pFile, int *count);
 
 /*
 Function: add_children
-@brief Helper function for RBT_export_dot. Adds every child of the current node and calls add_nil if necesary.
+@brief Helper function for RBT_export_dot. Adds every child of the current node and calls add_null if necesary.
 @param *pRBT: pointer of the tree
 @param *pNode: pointer of the node to be added
 @param *pFile: pointer of the file stream
-@param *count: counter identifier of how many nil nodes already exists
+@param *count: counter identifier of how many null nodes already exists
 */
 void add_children(RBT_t *pRBT, Node_t *pNode, FILE *pFile, int *count);
 
