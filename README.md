@@ -27,14 +27,21 @@ dot rbtree.dot -Tpng -o rbtree.png
 
 ## API
 
-New tree
+Define a function to print the type of your data
 ```
-RBT_t *newTree = RBT_new();
+void print_int_data(void *data){
+    printf("Data: %d\n", *(int *)data);
+}
 ```
 
-Insert a new node in the tree by key
+New tree, pass the function pointer to print the data
 ```
-RBT_insert(newTree, 1);
+RBT_t *newTree = RBT_new(&print_int_data);
+```
+
+Insert a new node in the tree by key with a value
+```
+RBT_insert(newTree, 1, &(int){10});
 ```
 
 Search a node by key

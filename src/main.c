@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 void print_int_data(void *data){
-    printf("Printing %d\n", *(int *)data);
+    printf("Data: %d\n", *(int *)data);
 }
 
 int main(int argc, char *argv[]){
@@ -14,7 +14,6 @@ int main(int argc, char *argv[]){
     RBT_insert(intTree, 12, &(int){15});
 
     RBT_delete(intTree, RBT_search(intTree, 3));
-    // Node_t *y = RBT_search(intTree, 4); // Search a node
 
     RBT_insert(intTree, 7, &(int){15});
     RBT_insert(intTree, 6, &(int){15});
