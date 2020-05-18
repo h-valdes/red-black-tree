@@ -178,8 +178,13 @@ _Bool insert_fixup(RBT_t *pRBT, Node_t *z) {
     return status;
 }
 
-void RBT_print_data(RBT_t *pRBT, Node_t *pNode) {
-    pRBT->print_fn(pNode);
+void RBT_print_node(RBT_t *pRBT, int key) {
+    Node_t *pNode = RBT_search(pRBT, key);
+    if(pNode == pRBT->null) {
+        printf("Node doesn't exist\n");
+    } else {
+        pRBT->print_fn(pNode);
+    }
 }
 
 Node_t *RBT_search(RBT_t *pRBT, int k) {

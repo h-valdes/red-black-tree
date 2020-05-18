@@ -53,12 +53,12 @@ Function: RBT_insert
 _Bool RBT_insert(RBT_t *pRBT, int key, void *data, size_t data_size);
 
 /*
-Function: RBT_print_data
+Function: RBT_print_node
 @brief Print the data in a node. Calls the function pointer in the tree.
 @param *pRBT: pointer of the tree
-@param *pNode: pointer of the node
+@param key: key of the node
 */
-void RBT_print_data(RBT_t *pRBT, Node_t *pNode);
+void RBT_print_node(RBT_t *pRBT, int key);
 
 /*
 Function: insert_fixup
