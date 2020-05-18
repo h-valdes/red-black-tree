@@ -9,7 +9,6 @@ typedef enum color_t {
     BLACK
 } color_t;
 
-typedef void PrintDataFunc_t(void *data);
 
 typedef struct Node {
     int key;
@@ -20,12 +19,17 @@ typedef struct Node {
     struct Node *right;
 } Node_t;
 
+typedef void PrintFunc_t(Node_t *pNode);
+
 typedef struct RBT_t {
     struct Node *root;
     struct Node *null;
-    size_t size;
-    PrintDataFunc_t *print_data;
+    PrintFunc_t *print_fn;
 } RBT_t;
+
+void print_int(Node_t *pNode);
+
+void print_str(Node_t *pNode);
 
 /*
 Function: RBT_new
@@ -33,7 +37,11 @@ Function: RBT_new
 @param *printFunc: function pointer of how to print the data
 @return a red black tree pointer
 */
-RBT_t *RBT_new(size_t size, PrintDataFunc_t *printFunc);
+RBT_t *RBT_new(PrintFunc_t *print_fn);
+
+RBT_t *RBT_new_int();
+
+RBT_t *RBT_new_str();
 
 /*
 Function: RBT_insert
@@ -42,7 +50,7 @@ Function: RBT_insert
 @param *data: pointer to the data that is going to be saved
 @return
 */
-_Bool RBT_insert(RBT_t *pRBT, int key, void *data);
+_Bool RBT_insert(RBT_t *pRBT, int key, void *data, size_t data_size);
 
 /*
 Function: RBT_print_data

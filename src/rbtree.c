@@ -3,16 +3,32 @@
 #include <stdlib.h>
 #include <string.h>
 
-RBT_t *RBT_new(size_t size, PrintDataFunc_t *printFunc) {
+void print_int(Node_t *pNode){
+    printf("Data in node %d: %d\n", pNode->key, *(int *)pNode->data);
+}
+
+void print_str(Node_t *pNode) {
+    printf("Data in node %d: %s\n", pNode->key, (char *)pNode->data);
+}
+
+RBT_t *RBT_new(PrintFunc_t *print_fn) {
     RBT_t *pRBT = NULL;
     pRBT = malloc(sizeof(RBT_t));
     pRBT->null = (Node_t *)malloc(sizeof(Node_t));
     pRBT->null->color = BLACK;
-    pRBT->size = size;
     pRBT->root = pRBT->null;
-    pRBT->print_data = printFunc;
+    pRBT->print_fn = print_fn;
 
     return pRBT;
+}
+
+RBT_t *RBT_new_int() {
+    RBT_t *pRBT = RBT_new(print_int);
+    return pRBT;
+}
+
+RBT_t *RBT_new_str() {
+    RBT_t *pRBT = RBT_new(print_str);
 }
 
 void left_rotate(RBT_t *pRBT, Node_t *x) {
@@ -64,7 +80,7 @@ void transplant(RBT_t *pRBT, Node_t *u, Node_t *v) {
     v->parent = u->parent;
 }
 
-_Bool RBT_insert(RBT_t *pRBT, int key, void *data) {
+_Bool RBT_insert(RBT_t *pRBT, int key, void *data, size_t size) {
     if (pRBT != NULL) {
         Node_t *z;
         z = (Node_t *)malloc(sizeof(Node_t));
@@ -72,8 +88,8 @@ _Bool RBT_insert(RBT_t *pRBT, int key, void *data) {
         z->key = key;
 
         // Set data
-        z->data = malloc(pRBT->size);
-        memcpy(z->data, data, pRBT->size);
+        z->data = malloc(size);
+        memcpy(z->data, data, size);
 
         z->color = RED;
         z->left = pRBT->null;
@@ -163,7 +179,7 @@ _Bool insert_fixup(RBT_t *pRBT, Node_t *z) {
 }
 
 void RBT_print_data(RBT_t *pRBT, Node_t *pNode) {
-    pRBT->print_data(pNode->data);
+    pRBT->print_fn(pNode);
 }
 
 Node_t *RBT_search(RBT_t *pRBT, int k) {
