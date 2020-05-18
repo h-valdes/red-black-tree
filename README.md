@@ -34,9 +34,9 @@ void print_int_data(void *data){
 }
 ```
 
-New tree, pass the function pointer to print the data
+New tree, pass the size of the data and the function pointer to print the data
 ```
-RBT_t *newTree = RBT_new(&print_int_data);
+RBT_t *newTree = RBT_new(sizeof(int), &print_int_data);
 ```
 
 Insert a new node in the tree by key with a value
