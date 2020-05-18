@@ -3,11 +3,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-RBT_t *RBT_new(PrintDataFunc_t *printFunc) {
+RBT_t *RBT_new(size_t size, PrintDataFunc_t *printFunc) {
     RBT_t *pRBT = NULL;
     pRBT = malloc(sizeof(RBT_t));
     pRBT->null = (Node_t *)malloc(sizeof(Node_t));
     pRBT->null->color = BLACK;
+    pRBT->size = size;
     pRBT->root = pRBT->null;
     pRBT->print_data = printFunc;
 
@@ -69,7 +70,11 @@ _Bool RBT_insert(RBT_t *pRBT, int key, void *data) {
         z = (Node_t *)malloc(sizeof(Node_t));
 
         z->key = key;
-        z->data = data;
+
+        // Set data
+        z->data = malloc(pRBT->size);
+        memcpy(z->data, data, pRBT->size);
+
         z->color = RED;
         z->left = pRBT->null;
         z->right = pRBT->null;
@@ -193,16 +198,12 @@ void RBT_delete(RBT_t *pRBT, Node_t *z) {
     color_t yOriginalColor = y->color;
     Node_t *x;
     if (z->left == pRBT->null) {
-        printf("1\n");
         x = z->right;
-        printf("x: %d\n", x->key);
         transplant(pRBT, z, z->right);
     } else if (z->right == pRBT->null) {
-        printf("2\n");
         x = z->left;
         transplant(pRBT, z, z->left);
     } else {
-        printf("3\n");
         y = tree_minimum(pRBT, z->right);
         yOriginalColor = y->color;
         x = y->right;
@@ -220,7 +221,7 @@ void RBT_delete(RBT_t *pRBT, Node_t *z) {
     }
 
     if (yOriginalColor == BLACK) {
-        printf("Entering Fixup");        
+        printf("Entering Fixup\n");        
         delete_fixup(pRBT, x);
     }
 }
@@ -333,6 +334,7 @@ void RBT_export_dot(RBT_t *pRBT) {
 
 void RBT_clear(RBT_t *pRBT, Node_t *pNode) {
     if (pNode->left == pRBT->null && pNode->right == pRBT->null) {
+        free(pNode->data);
         free(pNode);
     } else {
         if (pNode->left != pRBT->null) {

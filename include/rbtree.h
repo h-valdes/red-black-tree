@@ -23,6 +23,7 @@ typedef struct Node {
 typedef struct RBT_t {
     struct Node *root;
     struct Node *null;
+    size_t size;
     PrintDataFunc_t *print_data;
 } RBT_t;
 
@@ -32,7 +33,7 @@ Function: RBT_new
 @param *printFunc: function pointer of how to print the data
 @return a red black tree pointer
 */
-RBT_t *RBT_new(PrintDataFunc_t *printFunc);
+RBT_t *RBT_new(size_t size, PrintDataFunc_t *printFunc);
 
 /*
 Function: RBT_insert
