@@ -32,7 +32,6 @@ RBT_t *RBT_new_str() {
 }
 
 void left_rotate(RBT_t *pRBT, Node_t *x) {
-    printf("Left rotate\n");
     // For left rotation check that right child is not NULL
     Node_t *y = x->right;
     x->right = y->left;
@@ -132,7 +131,6 @@ _Bool insert_fixup(RBT_t *pRBT, Node_t *z) {
             Node_t *y = z->parent->parent->right;
             if (y->color == RED) {
                 // Case 1
-                printf("INSERT FIXUP: Case 1\n");
                 z->parent->color = BLACK;
                 y->color = BLACK;
                 z->parent->parent->color = RED;
@@ -140,12 +138,10 @@ _Bool insert_fixup(RBT_t *pRBT, Node_t *z) {
             } else {
                 if (z == z->parent->right) {
                     // Case 2
-                    printf("INSERT FIXUP: Case 2\n");
                     z = z->parent;
                     left_rotate(pRBT, z);
                 }
                 // Case 3
-                printf("INSERT FIXUP: Case 3\n");
                 z->parent->color = BLACK;
                 z->parent->parent->color = RED;
                 right_rotate(pRBT, z->parent->parent);
@@ -154,7 +150,6 @@ _Bool insert_fixup(RBT_t *pRBT, Node_t *z) {
             Node_t *y = z->parent->parent->left;
             if (y->color == RED) {
                 // Case 1
-                printf("INSERT FIXUP: Case 1\n");
                 z->parent->color = BLACK;
                 y->color = BLACK;
                 z->parent->parent->color = RED;
@@ -162,12 +157,10 @@ _Bool insert_fixup(RBT_t *pRBT, Node_t *z) {
             } else {
                 if (z == z->parent->left) {
                     // Case 2
-                    printf("INSERT FIXUP: Case 2\n");
                     z = z->parent;
                     right_rotate(pRBT, z);
                 }
                 // Case 3
-                printf("INSERT FIXUP: Case 3\n");
                 z->parent->color = BLACK;
                 z->parent->parent->color = RED;
                 left_rotate(pRBT, z->parent->parent);
@@ -181,7 +174,6 @@ _Bool insert_fixup(RBT_t *pRBT, Node_t *z) {
 void RBT_print_node(RBT_t *pRBT, int key) {
     Node_t *pNode = RBT_search(pRBT, key);
     if(pNode == pRBT->null) {
-        printf("Node doesn't exist\n");
     } else {
         pRBT->print_fn(pNode);
     }
@@ -214,7 +206,6 @@ Node_t *tree_maximum(RBT_t *pRBT, Node_t *x) {
 }
 
 void RBT_delete(RBT_t *pRBT, Node_t *z) {
-    printf("Start deleting!\n");
     Node_t *y = z;
     color_t yOriginalColor = y->color;
     Node_t *x;
@@ -242,7 +233,6 @@ void RBT_delete(RBT_t *pRBT, Node_t *z) {
     }
 
     if (yOriginalColor == BLACK) {
-        printf("Entering Fixup\n");        
         delete_fixup(pRBT, x);
     }
 }
@@ -252,25 +242,21 @@ void delete_fixup(RBT_t *pRBT, Node_t *x) {
         if (x == x->parent->left) {
             Node_t *w = x->parent->right;
             if (w->color == RED) {
-                printf("DELETE FIXUP: Case 1\n");
                 w->color = BLACK;
                 x->parent->color = RED;
                 left_rotate(pRBT, x->parent);
                 w = x->parent->right;
             }
             if (w->left->color == BLACK && w->right->color == BLACK) {
-                printf("DELETE FIXUP: Case 2\n");
                 w->color = RED;
                 x = x->parent;
             } else {
                 if (w->right->color == BLACK) {
-                    printf("DELETE FIXUP: Case 3\n");
                     w->left->color = BLACK;
                     w->color = RED;
                     right_rotate(pRBT, w);
                     w = x->parent->right;
                 }
-                printf("DELETE FIXUP: Case 4\n");
                 w->color = x->parent->color;
                 x->parent->color = BLACK;
                 w->right->color = BLACK;
@@ -280,25 +266,21 @@ void delete_fixup(RBT_t *pRBT, Node_t *x) {
         } else {
             Node_t *w = x->parent->left;
             if (w->color == RED) {
-                printf("DELETE FIXUP: Case 1\n");
                 w->color = BLACK;
                 x->parent->color = RED;
                 right_rotate(pRBT, x->parent);
                 w = x->parent->left;
             }
             if (w->right->color == BLACK && w->left->color == BLACK) {
-                printf("DELETE FIXUP: Case 1\n");
                 w->color = RED;
                 x = x->parent;
             } else {
                 if (w->left->color == BLACK) {
-                    printf("DELETE FIXUP: Case 3\n");
                     w->right->color = BLACK;
                     w->color = RED;
                     left_rotate(pRBT, w);
                     w = x->parent->left;
                 }
-                printf("DELETE FIXUP: Case 4\n");
                 w->color = x->parent->color;
                 x->parent->color = BLACK;
                 w->left->color = BLACK;

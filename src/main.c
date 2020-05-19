@@ -1,43 +1,58 @@
-#include "rbtree.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+#include <math.h>
+#include "benchmarking/binary_search_tree.h"
+#include "benchmarking/comparators.h"
+#include "benchmarking/debug.h"
+#include "rbtree.h"
 
+void visit(node* n)
+{
+      // printf("Visited node #%d\n",*(int*)n->data);
+}
 
-int main(int argc, char *argv[]){
-    RBT_t *intTree = RBT_new_int();
-    int value = 3;
-    RBT_insert(intTree, 3, &value, sizeof(value));
+int main(int argc, char* argv[]) {
+    int count = 10000;
+    int values[count];
+    for (int i = 1; i < count; i++) {
+        values[i] = i;
+    }
 
-    value = 5;
-    RBT_insert(intTree, 4, &value, sizeof(value));
+    // Insert RB Tree
 
-    value = 25;
-    RBT_insert(intTree, 5, &value, sizeof(value));
-
-    value = 30;
-    RBT_insert(intTree, 12, &value, sizeof(value));
-
-    RBT_delete(intTree, RBT_search(intTree, 3));
-
-    RBT_print_node(intTree, 4);
-    RBT_print_node(intTree, 5);
-    RBT_print_node(intTree, 12);
-
-    RBT_export_dot(intTree);
+    clock_t start = clock();
     
+    RBT_t* intTree = RBT_new_int();
+    for (int i = 1; i < count; i++) {
+        RBT_insert(intTree, values[i], &values[i], sizeof(values[i]));
+    }
+
+    printf("Insertion Time RBT: %.6fms\n", (double)(clock() - start) / (CLOCKS_PER_SEC / 1000));
+
     RBT_clear_tree(intTree);
 
-    RBT_t *strTree = RBT_new_str();
-    char text[] = "hola";
-    RBT_insert(strTree, 1, &text, sizeof(text));
+    // Insert BST
 
-    char new_text[] = "new super text, extra loooong!";
-    RBT_insert(strTree, 2, &new_text, sizeof(new_text));
+    start = clock();
 
-    RBT_print_node(strTree, 1);
-    RBT_print_node(strTree, 2);
+    binary_tree* bt = new_binary_tree(compare_integer, ORD_ASC);    
+    void* to_delete = NULL;
+    node* suc = NULL;
+    for (int i = 0; i < count; i++) {
+        int* data = malloc(sizeof(int));
+        *data = i;
+        if (i == count - 1) to_delete = (void*)data;
+        node* n = tree_insert(bt, data, TRUE);
+        if (i == 3) suc = n;
+    }
+    printf("Insertion Time BST: %.6fms\n", (double)(clock() - start) / (CLOCKS_PER_SEC / 1000));
+    
+    depth_first(bt, visit, IN_ORDER);
 
-    RBT_clear_tree(strTree);
+    node* del = tree_delete(bt, to_delete);
+    printf("Deleted node %d\n", *(int*)del->data);
+    depth_first(bt, visit, IN_ORDER);
 
     return 0;
 }

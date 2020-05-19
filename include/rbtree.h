@@ -27,8 +27,18 @@ typedef struct RBT_t {
     PrintFunc_t *print_fn;
 } RBT_t;
 
+/*
+Function: print_int
+@brief Print the information in a node with data type int
+@param *pNode pointer of the node to be printed
+*/
 void print_int(Node_t *pNode);
 
+/*
+Function: print_str
+@brief Print the information in a node with data type str
+@param *pNode pointer of the node to be printed
+*/
 void print_str(Node_t *pNode);
 
 /*
@@ -39,8 +49,18 @@ Function: RBT_new
 */
 RBT_t *RBT_new(PrintFunc_t *print_fn);
 
+/*
+Function: RBT_new_int
+@brief Wrapper around the generic constructur RBT_new for the int. 
+It assigns an already defined print_int function
+*/
 RBT_t *RBT_new_int();
 
+/*
+Function: RBT_new_str
+@brief Wrapper around the generic constructor RBT_new for the str type.
+It assigns an already defined print_str function
+*/
 RBT_t *RBT_new_str();
 
 /*
