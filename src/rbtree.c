@@ -7,6 +7,14 @@ void print_int(Node_t *pNode){
     printf("Data in node %d: %d\n", pNode->key, *(int *)pNode->data);
 }
 
+void print_double(Node_t *pNode){
+    printf("Data in node %d: %lf\n", pNode->key, *(double *)pNode->data);
+}
+
+void print_long_double(Node_t *pNode){
+    printf("Data in node %d: %Lf\n", pNode->key, *(long double *)pNode->data);
+}
+
 void print_str(Node_t *pNode) {
     printf("Data in node %d: %s\n", pNode->key, (char *)pNode->data);
 }
@@ -24,6 +32,16 @@ RBT_t *RBT_new(PrintFunc_t *print_fn) {
 
 RBT_t *RBT_new_int() {
     RBT_t *pRBT = RBT_new(print_int);
+    return pRBT;
+}
+
+RBT_t *RBT_new_double() {
+    RBT_t *pRBT = RBT_new(print_double);
+    return pRBT;
+}
+
+RBT_t *RBT_new_long_double() {
+    RBT_t *pRBT = RBT_new(print_long_double);
     return pRBT;
 }
 
@@ -322,8 +340,15 @@ void add_node_color(Node_t *pNode, FILE *pFile) {
     }
 }
 
-void RBT_export_dot(RBT_t *pRBT) {
-    FILE *pFile = fopen("rbtree.dot", "w+");
+void RBT_export_dot(RBT_t *pRBT, char *filename) {
+    char extension[] = ".dot";
+    int filename_length = strlen(filename);
+    int extension_length = strlen(extension);
+    char new_filename[filename_length + extension_length + 2];
+    strcpy(new_filename, filename);
+    strcat(new_filename, extension);
+
+    FILE *pFile = fopen(new_filename, "w+");
     // Start of the file
     fprintf(pFile, "digraph RBTree {\n");
     fprintf(pFile, "\tnode [fontname=\"Arial\"];\n");
@@ -349,7 +374,7 @@ void RBT_clear(RBT_t *pRBT, Node_t *pNode) {
     }
 }
 
-void RBT_clear_tree(RBT_t *pRBT) {
+void RBT_destroy(RBT_t *pRBT) {
     if (pRBT->root != pRBT->null) {
         RBT_clear(pRBT, pRBT->root);
     }

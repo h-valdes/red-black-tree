@@ -32,7 +32,7 @@ void benchmark() {
     // Generate 10000 elements in order and
     int count = 10000;
     int values[count];
-    for (int i = 1; i == count; i++) {
+    for (int i = 1; i < count + 1; i++) {
         values[i] = i;
     }
 
@@ -51,7 +51,7 @@ void benchmark() {
 
     printf("\tInsertion Time RBT: %.6fms\n", (double)(clock() - start) / (CLOCKS_PER_SEC / 1000));
 
-    RBT_clear_tree(rbTree);
+    RBT_destroy(rbTree);
 
     // Insert alternative RBT (cstuff)
     start = clock();
