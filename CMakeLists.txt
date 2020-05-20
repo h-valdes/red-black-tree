@@ -24,6 +24,6 @@ file(GLOB all_SRCS
 
 set (PROJECT_SOURCES main.c)
 
-
 add_executable(rbtree ${all_SRCS})
+
 target_link_libraries(rbtree m)
