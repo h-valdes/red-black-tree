@@ -6,8 +6,9 @@
 #include "benchmarking/benchmark.h"
 
 int main(int argc, char* argv[]) {
-    // int count = 1000;
+    // int count = 10;
     // int values[count];
+
     // for (int i = 1; i < count; i++) {
     //     values[i] = i;
     // }
@@ -16,6 +17,8 @@ int main(int argc, char* argv[]) {
     // for (int i = 1; i < count; i++) {
     //     RBT_insert(intTree, values[i], &values[i], sizeof(values[i]));
     // }
+
+    // RBT_export_dot(intTree);
 
     // RBT_clear_tree(intTree);
 

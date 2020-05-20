@@ -5,6 +5,7 @@
 
 #include "benchmarking/binary_search_tree.h"
 #include "benchmarking/red_black_tree.h"
+#include "benchmarking/avl_tree.h"
 #include "benchmarking/colors.h"
 #include "benchmarking/comparators.h"
 #include "benchmarking/debug.h"
@@ -12,20 +13,17 @@
 
 #include "rbtree.h"
 
-void visit_bst(node* n) {
-    // printf("Visited node #%d\n",*(int*)n->data);
-}
 
-void visit_rbt(node* n)
-{
-    DBG("Visited node #%d (%c) \tPARENT=%d (%c)\tHEIGHT=%d, COLOR=%d\n",
-    *(int*)n->data,
-    *(int*)n->data,
-    n->parent?*(int*)n->parent->data:-1,
-    n->parent?*(int*)n->parent->data:'*',
-    height(n),
-    n->color
-    );
+void shuffle(int* array, size_t n) {
+    if (n > 1) {
+        size_t i;
+        for (i = 0; i < n - 1; i++) {
+            size_t j = i + rand() / (RAND_MAX / (n - i) + 1);
+            int t = array[j];
+            array[j] = array[i];
+            array[i] = t;
+        }
+    }
 }
 
 void benchmark() {
@@ -34,9 +32,11 @@ void benchmark() {
     // Generate 10000 elements in order and
     int count = 10000;
     int values[count];
-    for (int i = 1; i < count; i++) {
+    for (int i = 1; i == count; i++) {
         values[i] = i;
     }
+
+    shuffle(values, count);
 
     printf("\tInsertion of %d ordered/ascendent integers\n", count);
 
@@ -45,7 +45,7 @@ void benchmark() {
     clock_t start = clock();
 
     RBT_t* rbTree = RBT_new_int();
-    for (int i = 1; i < count; i++) {
+    for (int i = 0; i < count; i++) {
         RBT_insert(rbTree, values[i], &values[i], sizeof(values[i]));
     }
 
@@ -57,30 +57,43 @@ void benchmark() {
     start = clock();
 
     binary_tree* rbt = new_binary_tree(compare_integer, ORD_ASC);
-    for (int i = 1; i < count; i++) {
+    for (int i = 0; i < count; i++) {
         int* data = malloc(sizeof(int));
         *data = values[i];
-        rb_insert(rbt, (void*)data, TRUE);
+        rb_insert(rbt, (void*)data, FALSE);
     }
 
     printf("\tInsertion Time RBT (cstuff library): %.6fms\n", (double)(clock() - start) / (CLOCKS_PER_SEC / 1000));
+
+    delete_tree(rbt);
 
     // Insert BST
 
     start = clock();
 
-    binary_tree* bt = new_binary_tree(compare_integer, ORD_ASC);
-    void* to_delete = NULL;
-    node* suc = NULL;
+    binary_tree* bst = new_binary_tree(compare_integer, ORD_ASC);
     for (int i = 0; i < count; i++) {
         int* data = malloc(sizeof(int));
-        *data = i;
-        node* n = tree_insert(bt, data, TRUE);
+        *data = values[i];
+        node* n = tree_insert(bst, data, FALSE);
     }
+
     printf("\tInsertion Time BST (cstuff library): %.6fms\n", (double)(clock() - start) / (CLOCKS_PER_SEC / 1000));
 
-    
+    delete_tree(bst);
 
-    
+    // Insert AVL
+    start = clock();
+
+    binary_tree* avl = new_binary_tree(compare_integer, ORD_ASC);
+    for (int i = 0; i < count; i++) {
+        int* data = malloc(sizeof(int));
+        *data = values[i];
+        node* n = tree_insert(avl, data, FALSE);
+    }    
+
+    printf("\tInsertion Time AVL (cstuff library): %.6fms\n", (double)(clock() - start) / (CLOCKS_PER_SEC / 1000));
+
+    delete_tree(avl);
 
 }
