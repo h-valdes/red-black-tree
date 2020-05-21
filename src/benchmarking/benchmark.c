@@ -32,7 +32,7 @@ void benchmark() {
 
 void benchmark_search() {
     printf("\nSTART SEARCH BENCHMARKING\n");
-    int iterations = 10;
+    int iterations = 1;
     int elements_limit = 100000;
     int jump = (int) round((double)elements_limit / 4);
     FILE *pFile = fopen("search.csv", "w+");
@@ -90,7 +90,7 @@ void search(FILE *pFile, int count, int iterations) {
     for (int i = 0; i < count; i++) {
         int* data = malloc(sizeof(int));
         *data = values[i];
-        node* n = tree_insert(rbt, data, TRUE);
+        node* n = rb_insert(rbt, data, TRUE);
     }
 
     for(int i = 0; i < iterations; i++) {
@@ -119,19 +119,19 @@ void search(FILE *pFile, int count, int iterations) {
     avg = total_time / iterations;
     fprintf(pFile, "BST,%d,%lf\n",count, avg);
 
-    // Search BST alternative (cstuff)
+    // Search AVL alternative (cstuff)
     total_time = 0;
     avg = 0;
     binary_tree* avl = new_binary_tree(compare_integer, ORD_ASC);
     for (int i = 0; i < count; i++) {
         int* data = malloc(sizeof(int));
         *data = values[i];
-        node* n = tree_insert(avl, data, TRUE);
+        node* n = avl_insert(avl, data, TRUE);
     }
 
     for(int i = 0; i < iterations; i++) {
         start = clock();
-        tree_search(bst, (void *)&last);
+        tree_search(avl, (void *)&last);
         total_time += (double)(clock() - start) / (CLOCKS_PER_SEC / 1000);
     }
     avg = total_time / iterations;
@@ -207,7 +207,7 @@ void unordered_insert(FILE *pFile, int count, int iterations) {
         for (int i = 0; i < count; i++) {
             int* data = malloc(sizeof(int));
             *data = values[i];
-            node* n = tree_insert(avl, data, FALSE);
+            node* n = avl_insert(avl, data, FALSE);
         }
 
         total_time += (double)(clock() - start) / (CLOCKS_PER_SEC / 1000);
