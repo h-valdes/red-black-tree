@@ -32,32 +32,34 @@ void benchmark() {
 
 void benchmark_search() {
     printf("\nSTART SEARCH BENCHMARKING\n");
-    int iterations = 5;
+    int iterations = 10;
     int elements_limit = 100000;
+    int jump = (int) round((double)elements_limit / 4);
     FILE *pFile = fopen("search.csv", "w+");
-    for(int elements = 1; elements <= elements_limit; elements = elements*2) {
+    for(int elements = 1; elements <= elements_limit; elements += jump) {
         search(pFile, elements, iterations);
     }
     fclose(pFile);
 }
 
-void benchmark_insertion() {
+void benchmark_insert() {
     printf("\nSTART INSERT BENCHMARKING\n");
     int iterations = 10;
     int elements_limit = 100000;
     FILE *pFile = fopen("insertion.csv", "w+");
-    for(int elements = 1; elements <= elements_limit; elements = elements*10) {
+    for(int elements = 1; elements <= elements_limit; elements = elements*2) {
         unordered_insert(pFile, elements, iterations);
     }
     fclose(pFile);
 }
 
 void search(FILE *pFile, int count, int iterations) {
+    printf("\tSearch on tree with %d elements\n", count);
     int values[count];
     for (int i = 0; i < count; i++) {
         values[i] = i + 1;
     }
-    shuffle(values, count);
+    // shuffle(values, count);
     int last = count - 1;
     printf("elements %d\n", count);
     clock_t start;
@@ -65,6 +67,8 @@ void search(FILE *pFile, int count, int iterations) {
     double avg;
 
     // Search RBT
+    total_time = 0;
+    avg = 0;
     RBT_t* rbTree = RBT_new_int();
     for (int i = 0; i < count; i++) {
         RBT_insert(rbTree, values[i], &values[i], sizeof(values[i]));
@@ -76,14 +80,17 @@ void search(FILE *pFile, int count, int iterations) {
         total_time += (double)(clock() - start) / (CLOCKS_PER_SEC / 1000);
     }
     avg = total_time / iterations;
-    fprintf(pFile, "rbt,%d,%lf\n",count, avg);
+    fprintf(pFile, "RBT,%d,%lf\n",count, avg);
+    RBT_destroy(rbTree);
 
     // Search RBT alternative (cstuff)
+    total_time = 0;
+    avg = 0;
     binary_tree* rbt = new_binary_tree(compare_integer, ORD_ASC);
     for (int i = 0; i < count; i++) {
         int* data = malloc(sizeof(int));
         *data = values[i];
-        node* n = tree_insert(rbt, data, FALSE);
+        node* n = tree_insert(rbt, data, TRUE);
     }
 
     for(int i = 0; i < iterations; i++) {
@@ -92,14 +99,16 @@ void search(FILE *pFile, int count, int iterations) {
         total_time += (double)(clock() - start) / (CLOCKS_PER_SEC / 1000);
     }
     avg = total_time / iterations;
-    fprintf(pFile, "rbt2,%d,%lf\n",count, avg);
+    fprintf(pFile, "RBT2,%d,%lf\n",count, avg);
 
-    // Search RBT alternative (cstuff)
+    // Search BST alternative (cstuff)
+    total_time = 0;
+    avg = 0;
     binary_tree* bst = new_binary_tree(compare_integer, ORD_ASC);
     for (int i = 0; i < count; i++) {
         int* data = malloc(sizeof(int));
         *data = values[i];
-        node* n = tree_insert(bst, data, FALSE);
+        node* n = tree_insert(bst, data, TRUE);
     }
 
     for(int i = 0; i < iterations; i++) {
@@ -108,7 +117,25 @@ void search(FILE *pFile, int count, int iterations) {
         total_time += (double)(clock() - start) / (CLOCKS_PER_SEC / 1000);
     }
     avg = total_time / iterations;
-    fprintf(pFile, "bst,%d,%lf\n",count, avg);
+    fprintf(pFile, "BST,%d,%lf\n",count, avg);
+
+    // Search BST alternative (cstuff)
+    total_time = 0;
+    avg = 0;
+    binary_tree* avl = new_binary_tree(compare_integer, ORD_ASC);
+    for (int i = 0; i < count; i++) {
+        int* data = malloc(sizeof(int));
+        *data = values[i];
+        node* n = tree_insert(avl, data, TRUE);
+    }
+
+    for(int i = 0; i < iterations; i++) {
+        start = clock();
+        tree_search(bst, (void *)&last);
+        total_time += (double)(clock() - start) / (CLOCKS_PER_SEC / 1000);
+    }
+    avg = total_time / iterations;
+    fprintf(pFile, "AVL,%d,%lf\n",count, avg);
 }
 
 void unordered_insert(FILE *pFile, int count, int iterations) {
@@ -116,7 +143,7 @@ void unordered_insert(FILE *pFile, int count, int iterations) {
     for (int i = 0; i < count; i++) {
         values[i] = i + 1;
     }
-    shuffle(values, count);
+    // shuffle(values, count);
 
     printf("\tInsertion of %d unordered integers\n", count);
 

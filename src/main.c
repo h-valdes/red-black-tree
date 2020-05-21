@@ -5,7 +5,7 @@
 #include "benchmarking/benchmark.h"
 
 int main(int argc, char* argv[]) {
-    // int count = 10;
+    // int count = 100000;
     
     // int values[count];
     // printf("\n\tint RBT\n");
@@ -17,10 +17,12 @@ int main(int argc, char* argv[]) {
     //     values[i] = i;
     //     // Insert the node
     //     RBT_insert(intTree, i, &values[i], sizeof(values[i]));
-
-    //     // Print the node
-    //     RBT_print_node(intTree, i);
     // }
+
+    // // Print the node
+    // RBT_print_node(intTree, 95130);
+
+    // RBT_destroy(intTree);
 
     // // Generate a DOT File of the tree
     // RBT_export_dot(intTree, "intTree");
