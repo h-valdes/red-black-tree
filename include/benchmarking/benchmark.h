@@ -4,13 +4,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void ordered_insertion(int count, int iterations);
+void unordered_insert(FILE *pFile, int count, int iterations);
 
-void unordered_insertion(FILE *pFile, int count, int iterations);
-
-void search();
+void search(FILE *pFile, int count, int iterations);
 
 void benchmark();
+
+void benchmark_search();
+
+void benchmark_insert();
 
 void shuffle(int* array, size_t n);
 
