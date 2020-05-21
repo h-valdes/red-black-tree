@@ -1,9 +1,12 @@
 #ifndef BENCHMARK_H
 #define BENCHMARK_H
 
-void ordered_insertion();
+#include <stdlib.h>
+#include <stdio.h>
 
-void unordered_insertion();
+void ordered_insertion(int count, int iterations);
+
+void unordered_insertion(FILE *pFile, int count, int iterations);
 
 void search();
 

@@ -26,25 +26,28 @@ void shuffle(int* array, size_t n) {
 }
 
 void benchmark() {
-    unordered_insertion();
+    printf("\nSTART BENCHMARKING\n");
+    int iterations = 100;
+    int elements_limit = 1000000;
+    FILE *pFile = fopen("insertion.csv", "w+");
+    for(int elements = 1; elements <= elements_limit; elements = elements*10) {
+        unordered_insertion(pFile, elements, iterations);
+    }
+    fclose(pFile);
 }
 
-void unordered_insertion() {
-    printf("\nSTART BENCHMARKING\n");
-
-    int iterations = 10;
-
-    // Generate 10000 elements in order and
-    int count = 100;
+void unordered_insertion(FILE *pFile, int count, int iterations) {
     int values[count];
     for (int i = 0; i < count; i++) {
         values[i] = i + 1;
     }
     shuffle(values, count);
 
-    printf("\tInsertion of %d ordered/ascendent integers\n", count);
+    printf("\tInsertion of %d unordered integers\n", count);
 
     clock_t start;
+    double total_time = 0;
+    double avg;
 
     // Insert RB Tree
     for (int it = 1; it <= iterations; it++) {
@@ -53,14 +56,14 @@ void unordered_insertion() {
         for (int i = 0; i < count; i++) {
             RBT_insert(rbTree, values[i], &values[i], sizeof(values[i]));
         }
-
-        printf("\tInsertion Time RBT[%d]: %.6fms\n", it, (double)(clock() - start) / (CLOCKS_PER_SEC / 1000));
-
+        total_time += (double)(clock() - start) / (CLOCKS_PER_SEC / 1000);
         RBT_destroy(rbTree);
     }
+    avg = total_time / (double)iterations;
+    fprintf(pFile, "rbt,%d,%lf\n", count, avg);
 
     // Insert alternative RBT (cstuff)
-
+    total_time = 0;
     for (int it = 1; it <= iterations; it++) {
         start = clock();
         binary_tree* rbt = new_binary_tree(compare_integer, ORD_ASC);
@@ -70,11 +73,14 @@ void unordered_insertion() {
             rb_insert(rbt, (void*)data, FALSE);
         }
 
-        printf("\tInsertion Time RBT (cstuff library): %.6fms\n", (double)(clock() - start) / (CLOCKS_PER_SEC / 1000));
+        total_time += (double)(clock() - start) / (CLOCKS_PER_SEC / 1000);
         delete_tree(rbt);
     }
+    avg = total_time / (double)iterations;
+    fprintf(pFile, "rbt (cstuff),%d,%lf\n",count, avg);
 
     // Insert BST
+    total_time = 0;
     for (int it = 0; it <= iterations; it++) {
         start = clock();
         binary_tree* bst = new_binary_tree(compare_integer, ORD_ASC);
@@ -84,12 +90,15 @@ void unordered_insertion() {
             node* n = tree_insert(bst, data, FALSE);
         }
 
-        printf("\tInsertion Time BST (cstuff library): %.6fms\n", (double)(clock() - start) / (CLOCKS_PER_SEC / 1000));
+        total_time += (double)(clock() - start) / (CLOCKS_PER_SEC / 1000);
 
         delete_tree(bst);
     }
+    avg = total_time / (double)iterations;
+    fprintf(pFile, "bst (cstuff),%d,%lf\n",count, avg);
 
     // Insert AVL
+    total_time = 0;
     for (int it = 0; it <= iterations; it++) {
         start = clock();
         binary_tree* avl = new_binary_tree(compare_integer, ORD_ASC);
@@ -99,8 +108,10 @@ void unordered_insertion() {
             node* n = tree_insert(avl, data, FALSE);
         }
 
-        printf("\tInsertion Time AVL (cstuff library): %.6fms\n", (double)(clock() - start) / (CLOCKS_PER_SEC / 1000));
+        total_time += (double)(clock() - start) / (CLOCKS_PER_SEC / 1000);
 
         delete_tree(avl);
     }
+    avg = total_time / (double)iterations;
+    fprintf(pFile, "avl (cstuff),%d,%lf\n",count, avg);
 }

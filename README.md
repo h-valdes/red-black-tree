@@ -87,5 +87,5 @@ RBT_export_dot(newTree);
 
 Clear the whole tree
 ```
-RBT_clear_tree(newTree);
+RBT_destroy(newTree);
 ```
