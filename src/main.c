@@ -49,7 +49,5 @@ int main(int argc, char* argv[]) {
     RBT_destroy(intTree);
     RBT_destroy(doubleTree);
 
-    // benchmark();
-
     return 0;
 }
