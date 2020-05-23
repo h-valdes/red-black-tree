@@ -160,6 +160,8 @@ void search_cstuff(FILE* pFile, tree_t tree_type,
             worst = time;
         }
     }
+
+    delete_tree(bt);
     avg = total_time / iterations;
     fprintf(pFile, "%s,%d,%lf,%lf\n", name, count, avg, worst);
 }
