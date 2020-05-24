@@ -11,15 +11,11 @@ project(rbtree C)
 
 include_directories(
     ${PROJECT_SOURCE_DIR}/include
-    ${PROJECT_SOURCE_DIR}/include/benchmarking
     ${PROJECT_SOURCE_DIR}/src
-    ${PROJECT_SOURCE_DIR}/src/benchmarking
 )
 file(GLOB all_SRCS
     "${PROJECT_SOURCE_DIR}/include/*.h"
-    "${PROJECT_SOURCE_DIR}/include/benchmarking/*.h"
     "${PROJECT_SOURCE_DIR}/src/*.c"
-    "${PROJECT_SOURCE_DIR}/src/benchmarking/*.c"
 )
 
 set (PROJECT_SOURCES main.c)
