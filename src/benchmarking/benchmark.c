@@ -51,7 +51,7 @@ void insert_cstuff(FILE* pFile, tree_t tree_type,
                     break;
                 case (AVL):
                     strcpy(name, "AVL");
-                    avl_insert(bt, (void*)data, FALSE);
+                    avl_insert(bt, (void*)data, TRUE);
                     break;
             }
         }
@@ -146,7 +146,7 @@ void search_cstuff(FILE* pFile, tree_t tree_type,
                 break;
             case (AVL):
                 strcpy(name, "AVL");
-                avl_insert(bt, (void*)data, FALSE);
+                avl_insert(bt, (void*)data, TRUE);
                 break;
         }
     }
@@ -176,7 +176,7 @@ void benchmark_search() {
     char filename[50];
     sprintf(filename, "search-%d-%d.csv", start, end);
     FILE* pFile = fopen(filename, "w+");
-    for (int count = start; count <= end; count += jump) {
+    for (int count = start; count <= end + 1; count += jump) {
         printf("\tSearch on tree with %d elements\n", count);
         int values[count];
         for (int i = 0; i < count; i++) {
@@ -208,7 +208,7 @@ void benchmark_insert() {
     char filename[50];
     sprintf(filename, "insert-%d-%d.csv", start, end);
     FILE* pFile = fopen(filename, "w+");
-    for (int count = start; count <= end; count += jump) {
+    for (int count = start; count <= end + 1; count += jump) {
         int values[count];
         for (int i = 0; i < count; i++) {
             values[i] = i;
