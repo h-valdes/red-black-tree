@@ -38,8 +38,8 @@
 #endif
 
 #include <math.h>
-#include "benchmarking/binary_search_tree.h"
-#include "benchmarking/debug.h"
+#include "binary_search_tree.h"
+#include "debug.h"
 
 #define red 0
 #define black 1

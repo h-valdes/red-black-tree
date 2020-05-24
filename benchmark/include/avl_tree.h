@@ -27,7 +27,7 @@
 #define AVL_TREE_H
 
 #ifndef NOINCLUDE
-#include "benchmarking/binary_search_tree.h"
+#include "binary_search_tree.h"
 #endif
 
 /**

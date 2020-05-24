@@ -1,4 +1,4 @@
-#include "benchmarking/comparators.h"
+#include "comparators.h"
 
 #include <string.h>
 #include <stdlib.h>

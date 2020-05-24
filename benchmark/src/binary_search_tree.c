@@ -39,11 +39,11 @@
 #include <stdlib.h>
 #endif
 
-#include "benchmarking/comparators.h"
-#include "benchmarking/colors.h"
-#include "benchmarking/debug.h"
-#include "benchmarking/burgergfx.h"
-#include "benchmarking/binary_tree.h"
+#include "comparators.h"
+#include "colors.h"
+#include "debug.h"
+#include "burgergfx.h"
+#include "binary_tree.h"
 
 
 node* tree_search(binary_tree* bt, void* val);

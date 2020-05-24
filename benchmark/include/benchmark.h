@@ -3,12 +3,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "benchmarking/avl_tree.h"
-#include "benchmarking/binary_search_tree.h"
-#include "benchmarking/colors.h"
-#include "benchmarking/comparators.h"
-#include "benchmarking/debug.h"
-#include "benchmarking/red_black_tree.h"
+#include "avl_tree.h"
+#include "binary_search_tree.h"
+#include "colors.h"
+#include "comparators.h"
+#include "debug.h"
+#include "red_black_tree.h"
 #include "rbtree.h"
 
 typedef enum __tree__t__{

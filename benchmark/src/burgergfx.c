@@ -18,15 +18,15 @@
     Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#include "benchmarking/burgergfx.h"
+#include "burgergfx.h"
 
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "benchmarking/colors.h"
-#include "benchmarking/debug.h"
-#include "benchmarking/comparators.h"
+#include "colors.h"
+#include "debug.h"
+#include "comparators.h"
 
 int gt(int a, int b) { return a > b ? a : b; }
 int lt(int a, int b) { return a < b ? a : b; }

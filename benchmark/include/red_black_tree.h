@@ -22,7 +22,7 @@
 #define RED_BLACK_TREE_H
 
 #include <math.h>
-#include "benchmarking/binary_search_tree.h"
+#include "binary_search_tree.h"
 
 #define red 0
 #define black 1

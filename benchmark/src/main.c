@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 #include "rbtree.h"
-#include "benchmarking/benchmark.h"
+#include "benchmark.h"
 
 int main(int argc, char* argv[]) {
     benchmark_insert();

@@ -1,4 +1,4 @@
-#include "benchmarking/benchmark.h"
+#include "benchmark.h"
 
 #include <math.h>
 #include <stdio.h>
@@ -6,12 +6,12 @@
 #include <string.h>
 #include <time.h>
 
-#include "benchmarking/avl_tree.h"
-#include "benchmarking/binary_search_tree.h"
-#include "benchmarking/colors.h"
-#include "benchmarking/comparators.h"
-#include "benchmarking/debug.h"
-#include "benchmarking/red_black_tree.h"
+#include "avl_tree.h"
+#include "binary_search_tree.h"
+#include "colors.h"
+#include "comparators.h"
+#include "debug.h"
+#include "red_black_tree.h"
 #include "rbtree.h"
 
 void shuffle(int* array, size_t n) {

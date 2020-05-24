@@ -18,7 +18,7 @@
     Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#include "benchmarking/binary_tree.h"
+#include "binary_tree.h"
 
 #ifdef PYLIB
 #include <Python.h>
@@ -26,9 +26,9 @@
 #include <stdlib.h>
 #endif
     
-#include "benchmarking/debug.h"
-#include "benchmarking/comparators.h"
-#include "benchmarking/linked_list.h"
+#include "debug.h"
+#include "comparators.h"
+#include "linked_list.h"
 
 #define TRUE 1
 #define FALSE 0

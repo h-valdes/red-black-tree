@@ -7,27 +7,23 @@ set(CMAKE_BUILD_TYPE Debug)
 
 # Project's name
 
-project(rbtree C)
+project(benchmark C)
 
 include_directories(
     ${PROJECT_SOURCE_DIR}/include
-    ${PROJECT_SOURCE_DIR}/include/benchmarking
     ${PROJECT_SOURCE_DIR}/src
-    ${PROJECT_SOURCE_DIR}/src/benchmarking
-    ../rbtree/include/
-    ../rbtree/src/
+    ../red-black-tree/include/
+    ../red-black-tree/src/
 )
 file(GLOB all_SRCS
     "${PROJECT_SOURCE_DIR}/include/*.h"
-    "${PROJECT_SOURCE_DIR}/include/benchmarking/*.h"
     "${PROJECT_SOURCE_DIR}/src/*.c"
-    "${PROJECT_SOURCE_DIR}/src/benchmarking/*.c"
-    "../rbtree/include/*.h"
-    "../rbtree/src/*.h"
+    "../red-black-tree/include/rbtree.h"
+    "../red-black-tree/src/rbtree.c"
 )
 
 set (PROJECT_SOURCES main.c)
 
-add_executable(rbtree ${all_SRCS})
+add_executable(benchmark ${all_SRCS})
 
-target_link_libraries(rbtree m)
+target_link_libraries(benchmark m)

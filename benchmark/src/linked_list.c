@@ -10,8 +10,8 @@
 #include <string.h>
 #endif
 
-#include "benchmarking/comparators.h"
-#include "benchmarking/linked_list.h"
+#include "comparators.h"
+#include "linked_list.h"
 
 linked_list *new_list(int (*comparator) (void*, void*), size_t typesize)
 {
