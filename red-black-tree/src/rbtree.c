@@ -367,16 +367,22 @@ void RBT_export_dot(RBT_t *pRBT, char *filename) {
 }
 
 void RBT_clear(RBT_t *pRBT, Node_t *pNode) {
-    if (pNode->left == pRBT->null && pNode->right == pRBT->null) {
+    int left_null = pNode->left == pRBT->null;
+    int right_null = pNode->right == pRBT->null;
+    if (left_null && right_null) {
         free(pNode->data);
         free(pNode);
     } else {
-        if (pNode->left != pRBT->null) {
+        if (!left_null && !right_null) {
             RBT_clear(pRBT, pNode->left);
-        }
-        if (pNode->right != pRBT->null) {
+            RBT_clear(pRBT, pNode->right);
+        } else if (!left_null && right_null) {
+            RBT_clear(pRBT, pNode->left);
+        } else if (left_null && !right_null) {
             RBT_clear(pRBT, pNode->right);
         }
+        free(pNode->data);
+        free(pNode);
     }
 }
 
