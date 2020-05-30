@@ -3,15 +3,15 @@
 #include <stdlib.h>
 #include <string.h>
 
-void print_int(Node_t *pNode){
+void print_int(Node_t *pNode) {
     printf("Data in node %d: %d\n", pNode->key, *(int *)pNode->data);
 }
 
-void print_double(Node_t *pNode){
+void print_double(Node_t *pNode) {
     printf("Data in node %d: %lf\n", pNode->key, *(double *)pNode->data);
 }
 
-void print_long_double(Node_t *pNode){
+void print_long_double(Node_t *pNode) {
     printf("Data in node %d: %Lf\n", pNode->key, *(long double *)pNode->data);
 }
 
@@ -191,7 +191,7 @@ _Bool insert_fixup(RBT_t *pRBT, Node_t *z) {
 
 void RBT_print_node(RBT_t *pRBT, int key) {
     Node_t *pNode = RBT_search(pRBT, key);
-    if(pNode == pRBT->null) {
+    if (pNode == pRBT->null) {
     } else {
         pRBT->print_fn(pNode);
     }
@@ -311,7 +311,9 @@ void delete_fixup(RBT_t *pRBT, Node_t *x) {
 }
 
 void add_null(Node_t *pNode, FILE *pFile, int *count) {
-    fprintf(pFile, "\tnull%d [shape=point];\n", *count);
+    fprintf(pFile,
+            "\tnull%d [shape=box, label=\"null\", fontcolor=white, fillcolor=black, style=filled];\n",
+            *count);
     fprintf(pFile, "\t%d -> null%d;\n", pNode->key, *count);
     *count = *count + 1;
 }
@@ -334,9 +336,13 @@ void add_children(RBT_t *pRBT, Node_t *pNode, FILE *pFile, int *count) {
 
 void add_node_color(Node_t *pNode, FILE *pFile) {
     if (pNode->color == BLACK) {
-        fprintf(pFile, "\t%d [fontcolor=white, fillcolor=black, style=filled];\n", pNode->key);
+        fprintf(pFile,
+                "\t%d [fontcolor=white, fillcolor=black, style=filled];\n",
+                pNode->key);
     } else {
-        fprintf(pFile, "\t%d [fontcolor=white, fillcolor=red, style=filled];\n", pNode->key);
+        fprintf(pFile,
+                "\t%d [fontcolor=white, fillcolor=red, style=filled];\n",
+                pNode->key);
     }
 }
 

@@ -33,18 +33,12 @@ make
 ./rbtree
 ```
 
-## Export DOT file into a PNG Image (You need to install Grahpviz)
-
-```
-dot rbtree.dot -Tpng -o rbtree.png
-```
-
 ## API
 
 Define a function to print the type of your data
 ```
-void print_data(void *data){
-    printf("Data: %d\n", *(int *)data);
+void print_data(Node_t *pNode){
+    printf("Data: %d\n", *(int *)pNode->data);
 }
 ```
 
@@ -82,10 +76,16 @@ RBT_print_node(newTree, 3);
 
 Generate a DOT file (Graphviz) from the tree
 ```
-RBT_export_dot(newTree);
+RBT_export_dot(newTree, "newTree");
 ```
 
 Clear the whole tree
 ```
 RBT_destroy(newTree);
+```
+
+## Export DOT file into a PNG Image (You need to install Grahpviz)
+
+```
+dot rbtree.dot -Tpng -o rbtree.png
 ```
