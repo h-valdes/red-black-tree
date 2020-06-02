@@ -253,6 +253,9 @@ void RBT_delete(RBT_t *pRBT, Node_t *z) {
     if (yOriginalColor == BLACK) {
         delete_fixup(pRBT, x);
     }
+    // Free the node and its data
+    free(z->data);
+    free(z);
 }
 
 void delete_fixup(RBT_t *pRBT, Node_t *x) {

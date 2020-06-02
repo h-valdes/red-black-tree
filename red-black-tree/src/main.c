@@ -21,6 +21,8 @@ int main(int argc, char* argv[]) {
         RBT_print_node(intTree, i);
 
     }
+    RBT_delete(intTree, RBT_search(intTree, 3));
+    RBT_delete(intTree, RBT_search(intTree, 7));
 
     // Generate a DOT File of the tree
     RBT_export_dot(intTree, "intTree");
