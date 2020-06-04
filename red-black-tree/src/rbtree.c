@@ -361,6 +361,7 @@ void RBT_export_dot(RBT_t *pRBT, char *filename) {
     // Start of the file
     fprintf(pFile, "digraph RBTree {\n");
     fprintf(pFile, "\tnode [shape=circle, fontname=\"Arial\"];\n");
+    fprintf(pFile, "\tedge [arrowhead=none];\n");
     if (pRBT->root != pRBT->null) {
         int count = 0;
         add_children(pRBT, pRBT->root, pFile, &count);
