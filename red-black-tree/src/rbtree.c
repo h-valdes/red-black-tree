@@ -315,7 +315,7 @@ void delete_fixup(RBT_t *pRBT, Node_t *x) {
 
 void add_null(Node_t *pNode, FILE *pFile, int *count) {
     fprintf(pFile,
-            "\tnull%d [shape=box, label=\"null\", fontcolor=white, fillcolor=black, style=filled];\n",
+            "\tnull%d [shape=box, label=\"null\", fontcolor=white, fillcolor=black, style=\"rounded, filled\"];\n",
             *count);
     fprintf(pFile, "\t%d -> null%d;\n", pNode->key, *count);
     *count = *count + 1;
@@ -360,7 +360,7 @@ void RBT_export_dot(RBT_t *pRBT, char *filename) {
     FILE *pFile = fopen(new_filename, "w+");
     // Start of the file
     fprintf(pFile, "digraph RBTree {\n");
-    fprintf(pFile, "\tnode [fontname=\"Arial\"];\n");
+    fprintf(pFile, "\tnode [shape=circle, fontname=\"Arial\"];\n");
     if (pRBT->root != pRBT->null) {
         int count = 0;
         add_children(pRBT, pRBT->root, pFile, &count);

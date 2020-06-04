@@ -23,6 +23,7 @@ int main(int argc, char* argv[]) {
     }
     RBT_delete(intTree, RBT_search(intTree, 3));
     RBT_delete(intTree, RBT_search(intTree, 7));
+    RBT_delete(intTree, RBT_search(intTree, 5));
 
     // Generate a DOT File of the tree
     RBT_export_dot(intTree, "intTree");
