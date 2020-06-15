@@ -15,3 +15,5 @@ log/
 install/
 build/
 rbtree
+Release/
+Debug/
