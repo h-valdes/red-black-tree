@@ -26,13 +26,13 @@ int main(int argc, char* argv[]) {
     RBT_delete(intTree, RBT_search(intTree, 5));
 
     // Generate a DOT File of the tree
-    RBT_export_dot(intTree, "intTree");
+    RBT_export_dot(intTree, "intTree", RBT_FALSE);
 
     int new_value = 20;
     RBT_insert(intTree, 15, &new_value, sizeof(new_value));
     RBT_print_node(intTree, 15);
 
-    RBT_export_dot(intTree, "intTree2");
+    RBT_export_dot(intTree, "intTree2", RBT_TRUE);
 
     RBT_destroy(intTree);
 
@@ -52,7 +52,7 @@ int main(int argc, char* argv[]) {
         RBT_print_node(doubleTree, i);
     }
 
-    RBT_export_dot(doubleTree, "doubleTree");
+    RBT_export_dot(doubleTree, "doubleTree", RBT_TRUE);
 
     // Clear the trees
     RBT_destroy(doubleTree);

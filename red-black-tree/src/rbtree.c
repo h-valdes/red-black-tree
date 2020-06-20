@@ -326,19 +326,23 @@ void add_null(Node_t *pNode, FILE *pFile, int *count) {
     *count = *count + 1;
 }
 
-void add_children(RBT_t *pRBT, Node_t *pNode, FILE *pFile, int *count) {
+void add_children(RBT_t *pRBT, Node_t *pNode, FILE *pFile, int *count, int has_null) {
     add_node_color(pNode, pFile);
     if (pNode->left != pRBT->null) {
         fprintf(pFile, "\t%d -> %d;\n", pNode->key, pNode->left->key);
-        add_children(pRBT, pNode->left, pFile, count);
+        add_children(pRBT, pNode->left, pFile, count, has_null);
     } else {
-        add_null(pNode, pFile, count);
+        if (has_null == RBT_TRUE) {
+            add_null(pNode, pFile, count);
+        }
     }
     if (pNode->right != pRBT->null) {
         fprintf(pFile, "\t%d -> %d;\n", pNode->key, pNode->right->key);
-        add_children(pRBT, pNode->right, pFile, count);
+        add_children(pRBT, pNode->right, pFile, count, has_null);
     } else {
-        add_null(pNode, pFile, count);
+        if (has_null == RBT_TRUE) {
+            add_null(pNode, pFile, count);
+        }
     }
 }
 
@@ -354,7 +358,7 @@ void add_node_color(Node_t *pNode, FILE *pFile) {
     }
 }
 
-int RBT_export_dot(RBT_t *pRBT, char *filename) {
+int RBT_export_dot(RBT_t *pRBT, char *filename, int has_null) {
     char extension[] = ".dot";
     int filename_length = strlen(filename);
     int extension_length = strlen(extension);
@@ -369,7 +373,7 @@ int RBT_export_dot(RBT_t *pRBT, char *filename) {
     fprintf(pFile, "\tedge [arrowhead=none];\n");
     if (pRBT->root != pRBT->null) {
         int count = 0;
-        add_children(pRBT, pRBT->root, pFile, &count);
+        add_children(pRBT, pRBT->root, pFile, &count, has_null);
     }
     fprintf(pFile, "}\n");
     fclose(pFile);

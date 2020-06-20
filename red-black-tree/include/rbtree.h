@@ -226,7 +226,7 @@ and calls add_null if necesary.
 @param *pFile pointer of the file stream
 @param *count counter identifier of how many null nodes already exists
 */
-void add_children(RBT_t *pRBT, Node_t *pNode, FILE *pFile, int *count);
+void add_children(RBT_t *pRBT, Node_t *pNode, FILE *pFile, int *count, int has_null);
 
 /*
 Function: add_node_color
@@ -243,6 +243,6 @@ Function: RBT_export_dot
 @param *pRBT pointer of the tree
 @param *filename name of the file
 */
-int RBT_export_dot(RBT_t *pRBT, char *filename);
+int RBT_export_dot(RBT_t *pRBT, char *filename, int has_null);
 
 #endif
