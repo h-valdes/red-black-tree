@@ -28,6 +28,12 @@ int main(int argc, char* argv[]) {
     // Generate a DOT File of the tree
     RBT_export_dot(intTree, "intTree");
 
+    int new_value = 20;
+    RBT_insert(intTree, 15, &new_value, sizeof(new_value));
+    RBT_print_node(intTree, 15);
+
+    RBT_export_dot(intTree, "intTree2");
+
     RBT_destroy(intTree);
 
     printf("\n\tdouble RBT\n");

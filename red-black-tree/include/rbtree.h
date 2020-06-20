@@ -4,6 +4,14 @@
 #include "stdio.h"
 #include "stdlib.h"
 
+// Boolean
+#define RBT_TRUE  1
+#define RBT_FALSE 0
+
+// Errors
+#define RBT_ERROR_SUCCESS   0
+#define RBT_ERROR_NOT_FOUND 1
+
 typedef enum color_t {
     RED,
     BLACK
@@ -97,7 +105,7 @@ Function: RBT_insert
 @param *data pointer to the data that is going to be saved
 @return
 */
-_Bool RBT_insert(RBT_t *pRBT, int key, void *data, size_t data_size);
+int RBT_insert(RBT_t *pRBT, int key, void *data, size_t data_size);
 
 /*
 Function: RBT_print_node
@@ -105,7 +113,7 @@ Function: RBT_print_node
 @param *pRBT pointer of the tree
 @param key key of the node
 */
-void RBT_print_node(RBT_t *pRBT, int key);
+int RBT_print_node(RBT_t *pRBT, int key);
 
 /*
 Function: insert_fixup
@@ -113,7 +121,7 @@ Function: insert_fixup
 @param *pRBT pointer of the tree
 @param *pNode: pointer of the node
 */
-_Bool insert_fixup(RBT_t *pRBT, Node_t *pNode);
+int insert_fixup(RBT_t *pRBT, Node_t *pNode);
 
 /*
 Function: RBT_search
@@ -189,7 +197,7 @@ Function: RBT_destroy
 @brief Clear and free the whole tree and nodes
 @param *pRBT pointer of the tree
 */
-void RBT_destroy(RBT_t *pRBT);
+int RBT_destroy(RBT_t *pRBT);
 
 /*
 Function: clear
@@ -235,6 +243,6 @@ Function: RBT_export_dot
 @param *pRBT pointer of the tree
 @param *filename name of the file
 */
-void RBT_export_dot(RBT_t *pRBT, char *filename);
+int RBT_export_dot(RBT_t *pRBT, char *filename);
 
 #endif

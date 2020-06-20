@@ -97,7 +97,7 @@ void transplant(RBT_t *pRBT, Node_t *u, Node_t *v) {
     v->parent = u->parent;
 }
 
-_Bool RBT_insert(RBT_t *pRBT, int key, void *data, size_t size) {
+int RBT_insert(RBT_t *pRBT, int key, void *data, size_t size) {
     if (pRBT != NULL) {
         Node_t *z;
         z = (Node_t *)malloc(sizeof(Node_t));
@@ -139,11 +139,12 @@ _Bool RBT_insert(RBT_t *pRBT, int key, void *data, size_t size) {
         }
         insert_fixup(pRBT, z);
     }
-    return 0;
+
+    return RBT_ERROR_SUCCESS;
 }
 
-_Bool insert_fixup(RBT_t *pRBT, Node_t *z) {
-    _Bool status = 0;
+int insert_fixup(RBT_t *pRBT, Node_t *z) {
+    int status = RBT_ERROR_SUCCESS;
     while (z->parent->color == RED) {
         if (z->parent == z->parent->parent->left) {
             Node_t *y = z->parent->parent->right;
@@ -189,12 +190,16 @@ _Bool insert_fixup(RBT_t *pRBT, Node_t *z) {
     return status;
 }
 
-void RBT_print_node(RBT_t *pRBT, int key) {
+int RBT_print_node(RBT_t *pRBT, int key) {
     Node_t *pNode = RBT_search(pRBT, key);
+    int status;
     if (pNode == pRBT->null) {
+        status = RBT_ERROR_NOT_FOUND;
     } else {
         pRBT->print_fn(pNode);
+        status = RBT_ERROR_SUCCESS;
     }
+    return RBT_ERROR_SUCCESS;
 }
 
 Node_t *RBT_search(RBT_t *pRBT, int k) {
@@ -349,7 +354,7 @@ void add_node_color(Node_t *pNode, FILE *pFile) {
     }
 }
 
-void RBT_export_dot(RBT_t *pRBT, char *filename) {
+int RBT_export_dot(RBT_t *pRBT, char *filename) {
     char extension[] = ".dot";
     int filename_length = strlen(filename);
     int extension_length = strlen(extension);
@@ -368,6 +373,8 @@ void RBT_export_dot(RBT_t *pRBT, char *filename) {
     }
     fprintf(pFile, "}\n");
     fclose(pFile);
+
+    return RBT_ERROR_SUCCESS;
 }
 
 void RBT_clear(RBT_t *pRBT, Node_t *pNode) {
@@ -390,10 +397,18 @@ void RBT_clear(RBT_t *pRBT, Node_t *pNode) {
     }
 }
 
-void RBT_destroy(RBT_t *pRBT) {
-    if (pRBT->root != pRBT->null) {
-        RBT_clear(pRBT, pRBT->root);
+int RBT_destroy(RBT_t *pRBT) {
+    int status;
+    if (pRBT != NULL) {
+        if (pRBT->root != pRBT->null) {
+            RBT_clear(pRBT, pRBT->root);
+        }
+        free(pRBT->null);
+        free(pRBT);
+        status = RBT_ERROR_SUCCESS;
+    } else {
+        status = RBT_ERROR_NOT_FOUND;
     }
-    free(pRBT->null);
-    free(pRBT);
+
+    return status;
 }
