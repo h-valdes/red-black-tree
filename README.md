@@ -18,19 +18,19 @@ It can export a DOT file in order to visualize the graph in Graphviz.
 
 
 ## Table of contents
-- [Build](##Build)
-    * [Release](###Release)
-    * [Debug](###Debug)
-- [API](##API)
-    * [Create a tree](###Create%20a%20tree)
-    * [Insert a new node](###Insert%20a%20new%20node)
-    * [Delete a node](###Delete%20a%20node)
-    * [Destroy a tree ](###Destroy%20a%20tree)
-    * [Search a node](###Search%20a%20node)
-    * [Print node data](###Print%20node%20data)
-    * [Export a DOT file](###Export%20a%20DOT%20file)
-- [Export DOT file into a PNG Image](##Export%20DOT%20file%20into%20a%20PNG%20Image)
-- [Benchmarking](##Benchmarking)
+- [Build](#Build)
+    * [Release](#Release)
+    * [Debug](#Debug)
+- [API](#API)
+    * [Create a tree](#Create%20a%20tree)
+    * [Insert a new node](#Insert%20a%20new%20node)
+    * [Delete a node](#Delete%20a%20node)
+    * [Destroy a tree ](#Destroy%20a%20tree)
+    * [Search a node](#Search%20a%20node)
+    * [Print node data](#Print%20node%20data)
+    * [Export a DOT file](#Export%20a%20DOT%20file)
+- [Export DOT file into a PNG Image](#Export%20DOT%20file%20into%20a%20PNG%20Image)
+- [Benchmarking](#Benchmarking)
 
 ## Build
 
