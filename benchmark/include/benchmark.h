@@ -19,7 +19,7 @@ typedef enum __tree__t__{
 
 void benchmark_search();
 
-void benchmark_insert();
+void benchmark_insert(int in_order);
 
 void insert_cstuff(FILE *pFile,
                    tree_t tree_type, int values[],

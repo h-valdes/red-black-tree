@@ -171,80 +171,46 @@ void benchmark_search() {
     int iterations = 20;
     int start = 1;
     int end = 100000;
-    int parts = 100;
+    int parts = (end > 100) ? 100 : end;
     int jump = (int)round((double)(end - start) / parts);
     char filename[50];
     sprintf(filename, "search-%d-%d.csv", start, end);
     FILE* pFile = fopen(filename, "w+");
 
-    for (int count = start; count <= end + 1; count += jump) {
-        printf("\tSearch on tree with %d elements\n", count);
-        if(count > end) {
-            count = end;
-        }
-        int values[count];
-        for (int i = 0; i < count; i++) {
-            values[i] = i;
-        }
-
-        search_rbt(pFile, values, count, iterations);
-        if(count == end) {
-            break;
-        }
-    }
-
-    for (int count = start; count <= end + 1; count += jump) {
-        printf("\tSearch on tree with %d elements\n", count);
-        if(count > end) {
-            count = end;
-        }
-        int values[count];
-        for (int i = 0; i < count; i++) {
-            values[i] = i;
-        }
-        // Search AVL alternative (cstuff)
-        search_cstuff(pFile, AVL, values, count, iterations);
-        if(count == end) {
-            break;
+    for (int i = 0; i < 4; i++) {
+        for (int count = start; count <= end + 1; count += jump) {
+            printf("\tSearch on tree with %d elements\n", count);
+            if (count > end) {
+                count = end;
+            }
+            int values[count];
+            for (int i = 0; i < count; i++) {
+                values[i] = i;
+            }
+            switch(i) {
+                case 0:
+                    search_rbt(pFile, values, count, iterations);
+                    break;
+                case 1:
+                    search_cstuff(pFile, RBT, values, count, iterations);
+                    break;
+                case 2:
+                    search_cstuff(pFile, AVL, values, count, iterations);
+                    break;
+                case 3:
+                    search_cstuff(pFile, BST, values, count, iterations);
+                    break;
+            }            
+            if (count == end) {
+                break;
+            }
         }
     }
 
-    for (int count = start; count <= end + 1; count += jump) {
-        printf("\tSearch on tree with %d elements\n", count);
-        if(count > end) {
-            count = end;
-        }
-        int values[count];
-        for (int i = 0; i < count; i++) {
-            values[i] = i;
-        }
-        // Search RBT alternative (cstuff)
-        search_cstuff(pFile, RBT, values, count, iterations);
-        if(count == end) {
-            break;
-        }
-    }
-
-    for (int count = start; count <= end + 1 + jump; count += jump) {
-        printf("\tSearch on tree with %d elements\n", count);
-        if(count > end) {
-            count = end;
-        }
-        int values[count];
-        for (int i = 0; i < count; i++) {
-            values[i] = i;
-        }
-
-        // Search BST alternative (cstuff)
-        search_cstuff(pFile, BST, values, count, iterations);
-        if(count == end) {
-            break;
-        }
-    }
     fclose(pFile);
 }
 
-void benchmark_insert() {
+void benchmark_insert(int in_order) {
     printf("\nSTART INSERT BENCHMARKING\n");
     int iterations = 20;
     int start = 1;
@@ -254,80 +220,41 @@ void benchmark_insert() {
     char filename[50];
     sprintf(filename, "insert-%d-%d.csv", start, end);
     FILE* pFile = fopen(filename, "w+");
-    for (int count = start; count <= end + 1; count += jump) {
-        if(count > end) {
-            count = end;
-        }
-        int values[count];
-        for (int i = 0; i < count; i++) {
-            values[i] = i;
-        }
-        shuffle(values, count);
+    
+    for (int i = 0; i < 1; i++) {
+        for (int count = start; count <= end + 1; count += jump) {
+            if (count > end) {
+                count = end;
+            }
+            int values[count];
+            for (int i = 0; i < count; i++) {
+                values[i] = i;
+            }
+            if (in_order == RBT_TRUE) {
+                shuffle(values, count);
+            }
 
-        printf("\tInsertion of %d unordered integers\n", count);
+            printf("\tInsertion of %d unordered integers\n", count);
 
-        insert_rbt(pFile, values, count, iterations);
-        if(count == end) {
-            break;
-        }
-    }
+            switch(i) {
+                case 0:
+                    insert_rbt(pFile, values, count, iterations);
+                    break;
+                case 1:
+                    insert_cstuff(pFile, RBT, values, count, iterations);
+                    break;
+                case 2:
+                    insert_cstuff(pFile, AVL, values, count, iterations);
+                    break;
+                case 3:
+                    insert_cstuff(pFile, BST, values, count, iterations);
+                    break;
+            }
 
-    for (int count = start; count <= end + 1; count += jump) {
-        if(count > end) {
-            count = end;
-        }
-        int values[count];
-        for (int i = 0; i < count; i++) {
-            values[i] = i;
-        }
-        shuffle(values, count);
-
-        printf("\tInsertion of %d unordered integers\n", count);
-
-        // Insert alternative RBT (cstuff)
-        insert_cstuff(pFile, RBT, values, count, iterations);
-        if(count == end) {
-            break;
-        }
-    }
-
-    for (int count = start; count <= end + 1; count += jump) {
-        if(count > end) {
-            count = end;
-        }
-        int values[count];
-        for (int i = 0; i < count; i++) {
-            values[i] = i;
-        }
-        shuffle(values, count);
-
-        printf("\tInsertion of %d unordered integers\n", count);
-
-        // Insert AVL
-        insert_cstuff(pFile, AVL, values, count, iterations);
-        if(count == end) {
-            break;
+            if (count == end) {
+                break;
+            }
         }
     }
-
-    for (int count = start; count <= end + 1; count += jump) {
-        if(count > end) {
-            count = end;
-        }
-        int values[count];
-        for (int i = 0; i < count; i++) {
-            values[i] = i;
-        }
-        shuffle(values, count);
-
-        printf("\tInsertion of %d unordered integers\n", count);
-
-        // Insert BST
-        insert_cstuff(pFile, BST, values, count, iterations);
-        if(count == end) {
-            break;
-        }
-    }
-
     fclose(pFile);
 }
