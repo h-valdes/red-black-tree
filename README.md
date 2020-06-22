@@ -30,7 +30,6 @@ It can export a DOT file in order to visualize the graph in Graphviz.
     * [Print node data](#Print-node-data)
     * [Export a DOT file](#Export-a-DOT-file)
 - [Export DOT file into a PNG Image](#Export-DOT-file-into-a-PNG-Image)
-- [Benchmarking](#Benchmarking)
 
 ## Build
 
@@ -119,5 +118,3 @@ dot rbtree.dot -Tpng -o rbtree.png
 ```
 There is a [cool extension](https://marketplace.visualstudio.com/items?itemName=joaompinto.vscode-graphviz) 
 in VScode Marketplace that can show and export the DOT files.
-
-## Benchmarking
