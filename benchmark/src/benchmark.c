@@ -14,6 +14,10 @@
 #include "red_black_tree.h"
 #include "rbtree.h"
 
+/*
+ * Implementation from StackOverflow user John Leehey 
+ * https://stackoverflow.com/questions/6127503/shuffle-array-in-c
+ */
 void shuffle(int* array, size_t n) {
     if (n > 1) {
         size_t i;
