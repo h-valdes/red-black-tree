@@ -166,15 +166,10 @@ void search_cstuff(FILE* pFile, tree_t tree_type,
     fprintf(pFile, "%s,%d,%lf,%lf\n", name, count, avg, worst);
 }
 
-void benchmark_search() {
+void benchmark_search(char *filename, int iterations, int start, int end) {
     printf("\nSTART SEARCH BENCHMARKING\n");
-    int iterations = 20;
-    int start = 1;
-    int end = 100000;
     int parts = (end > 100) ? 100 : end;
     int jump = (int)round((double)(end - start) / parts);
-    char filename[50];
-    sprintf(filename, "search-%d-%d.csv", start, end);
     FILE* pFile = fopen(filename, "w+");
 
     for (int i = 0; i < 4; i++) {
@@ -210,18 +205,13 @@ void benchmark_search() {
     fclose(pFile);
 }
 
-void benchmark_insert(int in_order) {
+void benchmark_insert(char *filename, int iterations, int start, int end, int in_order) {
     printf("\nSTART INSERT BENCHMARKING\n");
-    int iterations = 20;
-    int start = 1;
-    int end = 100000;
-    int parts = 100;
+    int parts = (end > 100) ? 100 : end;
     int jump = (int)round((double)(end - start) / parts);
-    char filename[50];
-    sprintf(filename, "insert-%d-%d.csv", start, end);
     FILE* pFile = fopen(filename, "w+");
     
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < 4; i++) {
         for (int count = start; count <= end + 1; count += jump) {
             if (count > end) {
                 count = end;

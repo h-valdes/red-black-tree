@@ -17,20 +17,29 @@ typedef enum __tree__t__{
     AVL
 }tree_t;
 
-void benchmark_search();
+void benchmark_search(char *filename, int iterations, int start, int end);
 
-void benchmark_insert(int in_order);
+void benchmark_insert(char *filename,
+                      int iterations, 
+                      int start, 
+                      int end, 
+                      int in_order);
 
 void insert_cstuff(FILE *pFile,
-                   tree_t tree_type, int values[],
-                   int count, int iterations);
+                   tree_t tree_type, 
+                   int values[], 
+                   int count, 
+                   int iterations);
 
 void insert_rbt(FILE *pFile, int values[], int count, int iterations);
 
 void search_rbt(FILE *pFile, int values[], int count, int iterations);
 
-void search_cstuff(FILE* pFile, tree_t tree_type,
-                   int values[], int count, int iterations);
+void search_cstuff(FILE *pFile,
+                   tree_t tree_type,
+                   int values[], 
+                   int count, 
+                   int iterations);
 
 void shuffle(int *array, size_t n);
 
