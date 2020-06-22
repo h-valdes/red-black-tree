@@ -1,11 +1,21 @@
 # Red-Black Tree
 
-This is an implementation in C of the Data Structure Red-Black Tree for the 
-Seminar "Exploring Data Structures in C" at the Technische Bergakademie Freiberg
-(TUBAF).
+This is an implementation in C of the data structure Red-Black Tree for the 
+Seminar ["Exploring data structures in C"](https://github.com/JayTee42/tubaf-csem-2020) 
+at the Technische Bergakademie Freiberg (TUBAF).
 
 The code is based on the pseudocode from the book "Introduction to Algorithms" 
 by Thomas H. Cormen et al.
+
+The Benchmarking use as comparisson the data structures (AVL, BST and RBT)
+implemented by the Github-User lbrito1 in the repository 
+[cstuff](https://github.com/lbrito1/cstuff).
+
+This structure is intended to be generic (the data and not the keys). 
+There is a a generic form to create a new tree and wrappers around it.
+
+It can export a DOT file in order to visualize the graph in Graphviz.
+
 
 ## Table of contents
 - [Build](##Build)
@@ -15,23 +25,12 @@ by Thomas H. Cormen et al.
     * [Create a tree](###Create%20a%20tree)
     * [Insert a new node](###Insert%20a%20new%20node)
     * [Delete a node](###Delete%20a%20node)
+    * [Destroy a tree ](###Destroy%20a%20tree)
     * [Search a node](###Search%20a%20node)
     * [Print node data](###Print%20node%20data)
     * [Export a DOT file](###Export%20a%20DOT%20file)
-
-
-This structure is intended to be generic (the data and not the keys). 
-There is a a generic form to create a new tree and wrappers around it.
-For example:
-
-```c
-// &print_data is a pointer to the function who knows how to cast your data
-// in order to print it
-RBT_new(&print_data); 
-RBT_new_int();
-```
-
-It can export a DOT file in order to visualize the graph in Graphviz.
+- [Export DOT file into a PNG Image](##Export%20DOT%20file%20into%20a%20PNG%20Image)
+- [Benchmarking](##Benchmarking)
 
 ## Build
 
@@ -87,6 +86,12 @@ Delete a node by passing the node
 RBT_delete(intTree, pNode);
 ```
 
+### Destroy a tree
+Clear a whole tree
+```c
+RBT_destroy(newTree);
+```
+
 ### Search a node
 Search a node by key
 ```c
@@ -106,13 +111,13 @@ Generate a DOT file (Graphviz) from the tree
 RBT_export_dot(newTree, "newTree");
 ```
 
-Clear the whole tree
-```c
-RBT_destroy(newTree);
-```
-
-## Export DOT file into a PNG Image (You need to install Grahpviz)
+## Export DOT file into a PNG Image
+Graphviz is required in order to export into a PNG.
 
 ```
 dot rbtree.dot -Tpng -o rbtree.png
 ```
+There is a [cool extension](https://marketplace.visualstudio.com/items?itemName=joaompinto.vscode-graphviz) 
+in VScode Marketplace that can show and export the DOT files.
+
+## Benchmarking
