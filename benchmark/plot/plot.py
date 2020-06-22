@@ -39,17 +39,17 @@ if __name__ == "__main__":
     # Exclude the BST from search graph
 
     search_avg_filtered = search_avg.drop(columns="BST")
-    fig = search_avg_filtered.plot(style='.').get_figure()
+    fig = search_avg_filtered.plot(style='.-').get_figure()
     fig.savefig("search_avg_filtered.png")
 
     search_worst_filtered = search_worst.drop(columns="BST")
-    fig = search_worst_filtered.plot(style='.').get_figure()
+    fig = search_worst_filtered.plot(style='.-').get_figure()
     fig.savefig("search_worst_filtered.png")
 
     # Worst time (log) (Excluding BST)
 
-    fig = search_worst_filtered.plot(style='.', logy=True).get_figure()
+    fig = search_worst_filtered.plot(style='.-', logy=True).get_figure()
     fig.savefig("search_worst_log_filtered.png")
 
-    fig = search_avg_filtered.plot(style='.', logy=True).get_figure()
+    fig = search_avg_filtered.plot(style='.-', logy=True).get_figure()
     fig.savefig("search_avg_log_filtered.png")

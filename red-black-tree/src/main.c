@@ -32,7 +32,8 @@ int main(int argc, char* argv[]) {
     RBT_insert(intTree, 15, &new_value, sizeof(new_value));
     RBT_print_node(intTree, 15);
 
-    RBT_export_dot(intTree, "intTree2", RBT_TRUE);
+    RBT_export_dot(intTree, "intTreePres1", RBT_TRUE);
+    RBT_export_dot(intTree, "intTreePres2", RBT_FALSE);
 
     RBT_destroy(intTree);
 
