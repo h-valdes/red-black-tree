@@ -1,55 +1,32 @@
+import os
+import shutil
 import pandas as pd
 import matplotlib.pyplot as plt
 
+def clean_directory(directory):    
+    if os.path.exists(directory):
+        shutil.rmtree(directory)
+    os.makedirs(directory)
+
+def generate_plot(filename, output, plot_style=".", has_logy=False):
+    csv = pd.read_csv(filename, header=None)
+    csv.columns = ["name", "nodes", "avg_case", "worst_case"]
+    avg_time = csv.pivot(index="nodes", columns="name", values="avg_case")
+
+    fig = avg_time.plot(style=plot_style, logy=has_logy).get_figure()
+    fig.savefig(output)
+
 if __name__ == "__main__":
-    insert_csv = pd.read_csv("insert-1-100000.csv", header=None)
-    search_csv = pd.read_csv("search-1-100000.csv", header=None)
-
-    insert_csv.columns = ["name", "nodes", "avg_case", "worst_case"]
-    search_csv.columns = ["name", "nodes", "avg_case", "worst_case"]
-
-    # Average time
-
-    insert_avg = insert_csv.pivot(index="nodes", columns="name", values="avg_case")
-    fig = insert_avg.plot(style='.').get_figure()
-    fig.savefig("insert_avg.png")
-
-    search_avg = search_csv.pivot(index="nodes", columns="name", values="avg_case")
-    fig = search_avg.plot(style='.').get_figure()
-    fig.savefig("search_avg.png")
-
-    # Worst time
-
-    insert_worst = insert_csv.pivot(index="nodes", columns="name", values="worst_case")
-    fig = insert_worst.plot(style='.').get_figure()
-    fig.savefig("insert_worst.png")
-
-    search_worst = search_csv.pivot(index="nodes", columns="name", values="worst_case")
-    fig = search_worst.plot(style='.').get_figure()
-    fig.savefig("search_worst.png")
-
-    # Worst time (log)
-
-    fig = insert_worst.plot(style='.', logy=True).get_figure()
-    fig.savefig("insert_worst_log.png")
-
-    fig = search_worst.plot(style='.', logy=True).get_figure()
-    fig.savefig("search_worst_log.png")
-
-    # Exclude the BST from search graph
-
-    search_avg_filtered = search_avg.drop(columns="BST")
-    fig = search_avg_filtered.plot(style='.-').get_figure()
-    fig.savefig("search_avg_filtered.png")
-
-    search_worst_filtered = search_worst.drop(columns="BST")
-    fig = search_worst_filtered.plot(style='.-').get_figure()
-    fig.savefig("search_worst_filtered.png")
-
-    # Worst time (log) (Excluding BST)
-
-    fig = search_worst_filtered.plot(style='.-', logy=True).get_figure()
-    fig.savefig("search_worst_log_filtered.png")
-
-    fig = search_avg_filtered.plot(style='.-', logy=True).get_figure()
-    fig.savefig("search_avg_log_filtered.png")
+    clean_directory("./images")
+    
+    # Average case
+    generate_plot("insert-avg.csv", "./images/insert-avg.png", ".", False)
+    generate_plot("insert-avg.csv", "./images/insert-avg-log.png", ".", True)
+    generate_plot("search-avg.csv", "./images/search-avg.png", ".-", False)
+    generate_plot("search-avg.csv", "./images/search-avg-log.png", ".-", True)
+    
+    # Worst case
+    # generate_plot("insert-worst.csv", "./images/insert-worst.png", ".", False)
+    # generate_plot("insert-worst.csv", "./images/insert-worst-log.png", ".", True)
+    # generate_plot("search-worst.csv", "./images/search-worst.png", ".-", False)
+    # generate_plot("search-worst.csv", "./images/search-worst-log.png", ".-", True)
