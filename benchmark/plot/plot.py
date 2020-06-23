@@ -20,13 +20,29 @@ if __name__ == "__main__":
     clean_directory("./images")
     
     # Average case
-    generate_plot("insert-avg.csv", "./images/insert-avg.png", ".", False)
-    generate_plot("insert-avg.csv", "./images/insert-avg-log.png", ".", True)
-    generate_plot("search-avg.csv", "./images/search-avg.png", ".-", False)
-    generate_plot("search-avg.csv", "./images/search-avg-log.png", ".-", True)
+    generate_plot(
+        "./csv/insert-avg.csv", 
+        "./images/insert-avg.png", 
+        ".", 
+        False)
+    generate_plot(
+        "./csv/insert-avg.csv", 
+        "./images/insert-avg-log.png", 
+        ".", 
+        True)
+    generate_plot(
+        "./csv/search-avg.csv", 
+        "./images/search-avg.png", 
+        ".-", 
+        False)
+    generate_plot(
+        "./csv/search-avg.csv", 
+        "./images/search-avg-log.png", 
+        ".-", 
+        True)
     
     # Worst case
-    # generate_plot("insert-worst.csv", "./images/insert-worst.png", ".", False)
-    # generate_plot("insert-worst.csv", "./images/insert-worst-log.png", ".", True)
-    # generate_plot("search-worst.csv", "./images/search-worst.png", ".-", False)
-    # generate_plot("search-worst.csv", "./images/search-worst-log.png", ".-", True)
+    # generate_plot("./csv/insert-worst.csv", "./images/insert-worst.png", ".", False)
+    # generate_plot("./csv/insert-worst.csv", "./images/insert-worst-log.png", ".", True)
+    # generate_plot("./csv/search-worst.csv", "./images/search-worst.png", ".-", False)
+    # generate_plot("./csv/search-worst.csv", "./images/search-worst-log.png", ".-", True)
