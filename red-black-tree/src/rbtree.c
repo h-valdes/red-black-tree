@@ -228,39 +228,50 @@ Node_t *tree_maximum(RBT_t *pRBT, Node_t *x) {
     return x;
 }
 
-void RBT_delete(RBT_t *pRBT, Node_t *z) {
-    Node_t *y = z;
-    color_t yOriginalColor = y->color;
-    Node_t *x;
-    if (z->left == pRBT->null) {
-        x = z->right;
-        transplant(pRBT, z, z->right);
-    } else if (z->right == pRBT->null) {
-        x = z->left;
-        transplant(pRBT, z, z->left);
-    } else {
-        y = tree_minimum(pRBT, z->right);
-        yOriginalColor = y->color;
-        x = y->right;
-        if (y->parent == z) {
-            x->parent = y;
+int RBT_delete(RBT_t *pRBT, int key) {
+    Node_t *z = RBT_search(pRBT, key);
+    int result;
+    if (z != pRBT->null) {
+        Node_t *y = z;
+        color_t yOriginalColor = y->color;
+        Node_t *x;
+        if (z->left == pRBT->null) {
+            x = z->right;
+            transplant(pRBT, z, z->right);
+        } else if (z->right == pRBT->null) {
+            x = z->left;
+            transplant(pRBT, z, z->left);
         } else {
-            transplant(pRBT, y, y->right);
-            y->right = z->right;
-            y->right->parent = y;
+            y = tree_minimum(pRBT, z->right);
+            yOriginalColor = y->color;
+            x = y->right;
+            if (y->parent == z) {
+                x->parent = y;
+            } else {
+                transplant(pRBT, y, y->right);
+                y->right = z->right;
+                y->right->parent = y;
+            }
+            transplant(pRBT, z, y);
+            y->left = z->left;
+            y->left->parent = y;
+            y->color = z->color;
         }
-        transplant(pRBT, z, y);
-        y->left = z->left;
-        y->left->parent = y;
-        y->color = z->color;
+
+        if (yOriginalColor == BLACK) {
+            delete_fixup(pRBT, x);
+        }
+
+        // Free the node and its data
+        free(z->data);
+        free(z);
+
+        result = RBT_ERROR_SUCCESS;
+    } else {
+        result = RBT_ERROR_NOT_FOUND;
     }
 
-    if (yOriginalColor == BLACK) {
-        delete_fixup(pRBT, x);
-    }
-    // Free the node and its data
-    free(z->data);
-    free(z);
+    return result;
 }
 
 void delete_fixup(RBT_t *pRBT, Node_t *x) {

@@ -181,7 +181,7 @@ Function: RBT_delete
 @param *pRBT pointer of the tree
 @param *z pointer of the node to be deleted
 */
-void RBT_delete(RBT_t *pRBT, Node_t *z);
+int RBT_delete(RBT_t *pRBT, int key);
 
 /*
 Function: delete_fixup
