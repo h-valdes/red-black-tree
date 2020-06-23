@@ -17,7 +17,11 @@ typedef enum __tree__t__{
     AVL
 }tree_t;
 
-void benchmark_search(char *filename, int iterations, int start, int end);
+void benchmark_search(char *filename,
+                      int iterations, 
+                      int start, 
+                      int end, 
+                      int in_order);
 
 void benchmark_insert(char *filename,
                       int iterations, 

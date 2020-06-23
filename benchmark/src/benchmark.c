@@ -170,7 +170,11 @@ void search_cstuff(FILE* pFile, tree_t tree_type,
     fprintf(pFile, "%s,%d,%lf,%lf\n", name, count, avg, worst);
 }
 
-void benchmark_search(char *filename, int iterations, int start, int end) {
+void benchmark_search(char* filename,
+                      int iterations, 
+                      int start, 
+                      int end, 
+                      int in_order) {
     printf("\nSTART SEARCH BENCHMARKING\n");
     int parts = (end > 100) ? 100 : end;
     int jump = (int)round((double)(end - start) / parts);
@@ -186,6 +190,10 @@ void benchmark_search(char *filename, int iterations, int start, int end) {
             for (int i = 0; i < count; i++) {
                 values[i] = i;
             }
+            if (in_order == RBT_FALSE) {
+                shuffle(values, count);
+            }
+
             switch(i) {
                 case 0:
                     search_rbt(pFile, values, count, iterations);
@@ -209,7 +217,11 @@ void benchmark_search(char *filename, int iterations, int start, int end) {
     fclose(pFile);
 }
 
-void benchmark_insert(char *filename, int iterations, int start, int end, int in_order) {
+void benchmark_insert(char* filename,
+                      int iterations, 
+                      int start, 
+                      int end, 
+                      int in_order) {
     printf("\nSTART INSERT BENCHMARKING\n");
     int parts = (end > 100) ? 100 : end;
     int jump = (int)round((double)(end - start) / parts);
@@ -224,7 +236,7 @@ void benchmark_insert(char *filename, int iterations, int start, int end, int in
             for (int i = 0; i < count; i++) {
                 values[i] = i;
             }
-            if (in_order == RBT_TRUE) {
+            if (in_order == RBT_FALSE) {
                 shuffle(values, count);
             }
 
