@@ -42,7 +42,23 @@ if __name__ == "__main__":
         True)
     
     # Worst case
-    # generate_plot("./csv/insert-worst.csv", "./images/insert-worst.png", ".", False)
-    # generate_plot("./csv/insert-worst.csv", "./images/insert-worst-log.png", ".", True)
-    # generate_plot("./csv/search-worst.csv", "./images/search-worst.png", ".-", False)
-    # generate_plot("./csv/search-worst.csv", "./images/search-worst-log.png", ".-", True)
+    generate_plot(
+        "./csv/insert-worst.csv", 
+        "./images/insert-worst.png", 
+        ".", 
+        False)
+    generate_plot(
+        "./csv/insert-worst.csv", 
+        "./images/insert-worst-log.png", 
+        ".", 
+        True)
+    generate_plot(
+        "./csv/search-worst.csv", 
+        "./images/search-worst.png", 
+        ".-", 
+        False)
+    generate_plot(
+        "./csv/search-worst.csv", 
+        "./images/search-worst-log.png", 
+        ".-", 
+        True)

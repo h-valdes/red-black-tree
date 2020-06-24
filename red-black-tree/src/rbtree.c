@@ -3,10 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-void print_int(Node_t *pNode) {
-    printf("Data in node %d: %d\n", pNode->key, *(int *)pNode->data);
-}
-
 void print_double(Node_t *pNode) {
     printf("Data in node %d: %lf\n", pNode->key, *(double *)pNode->data);
 }
@@ -28,6 +24,10 @@ RBT_t *RBT_new(PrintFunc_t *print_fn) {
     pRBT->print_fn = print_fn;
 
     return pRBT;
+}
+
+void print_int(Node_t *pNode) {
+    printf("Data in node %d: %d\n", pNode->key, *(int *)pNode->data);
 }
 
 RBT_t *RBT_new_int() {
