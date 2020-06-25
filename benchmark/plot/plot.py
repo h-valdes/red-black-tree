@@ -13,7 +13,9 @@ def generate_plot(filename, output, plot_style=".", has_logy=False):
     csv.columns = ["name", "nodes", "avg_case", "worst_case"]
     avg_time = csv.pivot(index="nodes", columns="name", values="avg_case")
 
-    fig = avg_time.plot(style=plot_style, logy=has_logy).get_figure()
+    ax = avg_time.plot(style=plot_style, logy=has_logy)
+    ax.set_ylabel("ms")
+    fig = ax.get_figure()
     fig.savefig(output)
 
 if __name__ == "__main__":
