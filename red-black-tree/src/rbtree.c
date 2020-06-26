@@ -331,7 +331,7 @@ void delete_fixup(RBT_t *pRBT, Node_t *x) {
 
 void add_null(Node_t *pNode, FILE *pFile, int *count) {
     fprintf(pFile,
-            "\tnull%d [shape=box, label=\"null\", fontcolor=white, fillcolor=black, style=\"rounded, filled\"];\n",
+            "\tnull%d [shape=box,label=\"null\",fontcolor=white,fillcolor=black,style=\"rounded,filled\"];\n",
             *count);
     fprintf(pFile, "\t%d -> null%d;\n", pNode->key, *count);
     *count = *count + 1;
@@ -360,11 +360,11 @@ void add_children(RBT_t *pRBT, Node_t *pNode, FILE *pFile, int *count, int has_n
 void add_node_color(Node_t *pNode, FILE *pFile) {
     if (pNode->color == BLACK) {
         fprintf(pFile,
-                "\t%d [fontcolor=white, fillcolor=black, style=filled];\n",
+                "\t%d [fontcolor=white,fillcolor=black,style=filled];\n",
                 pNode->key);
     } else {
         fprintf(pFile,
-                "\t%d [fontcolor=white, fillcolor=red, style=filled];\n",
+                "\t%d [fontcolor=white,fillcolor=red,style=filled];\n",
                 pNode->key);
     }
 }
@@ -373,14 +373,21 @@ int RBT_export_dot(RBT_t *pRBT, char *filename, int has_null) {
     char extension[] = ".dot";
     int filename_length = strlen(filename);
     int extension_length = strlen(extension);
-    char new_filename[filename_length + extension_length + 2];
+
+    char *new_filename = malloc(
+        sizeof(char) * (filename_length + extension_length + 2));
     strcpy(new_filename, filename);
     strcat(new_filename, extension);
 
     FILE *pFile = fopen(new_filename, "w+");
+    if(!pFile) {
+        fprintf(stderr, "File couldn't be opened!\n");
+        return RBT_ERROR_FILE_NOT_OPENED;
+    }
+
     // Start of the file
     fprintf(pFile, "digraph RBTree {\n");
-    fprintf(pFile, "\tnode [shape=circle, fontname=\"Arial\"];\n");
+    fprintf(pFile, "\tnode [shape=circle,fontname=\"Arial\"];\n");
     fprintf(pFile, "\tedge [arrowhead=none];\n");
     if (pRBT->root != pRBT->null) {
         int count = 0;
@@ -388,6 +395,8 @@ int RBT_export_dot(RBT_t *pRBT, char *filename, int has_null) {
     }
     fprintf(pFile, "}\n");
     fclose(pFile);
+
+    free(new_filename);
 
     return RBT_ERROR_SUCCESS;
 }

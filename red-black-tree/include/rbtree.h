@@ -9,8 +9,9 @@
 #define RBT_FALSE 0
 
 // Errors
-#define RBT_ERROR_SUCCESS   0
-#define RBT_ERROR_NOT_FOUND 1
+#define RBT_ERROR_SUCCESS         0
+#define RBT_ERROR_NOT_FOUND       1
+#define RBT_ERROR_FILE_NOT_OPENED 2
 
 typedef enum color_t {
     RED,
