@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) {
 
     // Generate a int RBT
     printf("\n\tint RBT\n");  
-    int count = 5;
+    int count = 7;
     int values[count];
 
     RBT_t *intTree = RBT_new_int();

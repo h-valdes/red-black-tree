@@ -47,15 +47,15 @@ void insert_cstuff(FILE* pFile, tree_t tree_type,
             switch (tree_type) {
                 case (BST):
                     strcpy(name, "BST");
-                    tree_insert(bt, (void*)data, TRUE);
+                    tree_insert(bt, (void*)data, FALSE);
                     break;
                 case (RBT):
                     strcpy(name, "RBT2");
-                    rb_insert(bt, (void*)data, TRUE);
+                    rb_insert(bt, (void*)data, FALSE);
                     break;
                 case (AVL):
                     strcpy(name, "AVL");
-                    avl_insert(bt, (void*)data, TRUE);
+                    avl_insert(bt, (void*)data, FALSE);
                     break;
             }
         }
@@ -142,15 +142,15 @@ void search_cstuff(FILE* pFile, tree_t tree_type,
         switch (tree_type) {
             case (BST):
                 strcpy(name, "BST");
-                tree_insert(bt, (void*)data, TRUE);
+                tree_insert(bt, (void*)data, FALSE);
                 break;
             case (RBT):
                 strcpy(name, "RBT2");
-                rb_insert(bt, (void*)data, TRUE);
+                rb_insert(bt, (void*)data, FALSE);
                 break;
             case (AVL):
                 strcpy(name, "AVL");
-                avl_insert(bt, (void*)data, TRUE);
+                avl_insert(bt, (void*)data, FALSE);
                 break;
         }
     }
