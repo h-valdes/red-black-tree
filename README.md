@@ -80,9 +80,9 @@ RBT_insert(intTree, 1, &new_value, sizeof(new_value));
 ```
 
 ### Delete a node
-Delete a node by passing the node
+Delete a node by passing a key of the node
 ```c
-RBT_delete(intTree, pNode);
+RBT_delete(intTree, key);
 ```
 
 ### Destroy a tree
@@ -105,10 +105,19 @@ RBT_print_node(newTree, 3);
 ```
 
 ### Export a DOT file
-Generate a DOT file (Graphviz) from the tree
+Generate a DOT file (Graphviz) from the tree.
+It can exports with or without the Leafs (Null-Nodes).
+
+Without Leafs:
 ```c
-RBT_export_dot(newTree, "newTree");
+RBT_export_dot(newTree, filename, RBT_FALSE);
 ```
+
+With Leafs:
+```c
+RBT_export_dot(newTree, filename, RBT_TRUE);
+```
+The output file has the format filename.dot (only the name needs to be passed).
 
 ## Export DOT file into a PNG Image
 Graphviz is required in order to export into a PNG.
